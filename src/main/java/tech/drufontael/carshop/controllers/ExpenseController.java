@@ -25,14 +25,14 @@ public class ExpenseController implements ExpenseDoc {
     @Autowired
     ExpenseService service;
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<ExpenseDto> create(@RequestBody ExpenseDto obj){
         Expense expense =service.create(obj);
         obj.setId(expense.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(obj);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Expense>> findall(){
         List<Expense> expenses =service.findAll();
         for(Expense expense : expenses){

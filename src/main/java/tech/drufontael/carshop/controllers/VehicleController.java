@@ -27,7 +27,7 @@ public class VehicleController implements VehicleDoc {
     @Autowired
     VehicleService service;
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Vehicle> create(@RequestBody VehicleDto obj){
         Vehicle vehicle=obj.toVehicle();
         vehicle=service.create(vehicle);
@@ -36,7 +36,7 @@ public class VehicleController implements VehicleDoc {
         return ResponseEntity.status(HttpStatus.CREATED).body(vehicle);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Vehicle>> findall(){
         List<Vehicle> vehicles=service.findAll();
         for(Vehicle vehicle:vehicles){

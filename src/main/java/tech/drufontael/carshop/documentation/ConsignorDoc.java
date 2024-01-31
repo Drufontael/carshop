@@ -20,7 +20,7 @@ public interface ConsignorDoc {
     public ResponseEntity<List<Consignor>> findAll();
 
     @Operation(method = "Put",summary = "Update",description = "Atualiza um consignante")
-    public ResponseEntity<Consignor> update(String register);
+    public ResponseEntity<Consignor> update(String register,ConsignorDto obj);
 
     @Operation(method = "Delete",summary = "Delete",description = "Exclui um consignante")
     public ResponseEntity delete(String register);

@@ -6,12 +6,13 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "tb_consignor")
-public class Consignor {
+public class Consignor extends RepresentationModel<Consignor> {
     private String name;
     private String address;
     @Id
