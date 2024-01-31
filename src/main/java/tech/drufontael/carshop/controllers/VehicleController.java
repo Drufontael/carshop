@@ -7,6 +7,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech.drufontael.carshop.documentation.VehicleDoc;
 import tech.drufontael.carshop.dto.ImageDto;
 import tech.drufontael.carshop.dto.VehicleDto;
 import tech.drufontael.carshop.model.Expense;
@@ -22,12 +23,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping("/vehicles")
 @CrossOrigin(origins = "*")
-public class VehicleController {
+public class VehicleController implements VehicleDoc {
     @Autowired
     VehicleService service;
 
     @PostMapping("/")
-    @Operation(summary = "Create",description = "Cadastra um veiculo")
     public ResponseEntity<Vehicle> create(@RequestBody VehicleDto obj){
         Vehicle vehicle=obj.toVehicle();
         vehicle=service.create(vehicle);
@@ -37,7 +37,6 @@ public class VehicleController {
     }
 
     @GetMapping("/")
-    @Operation(summary = "List All",description = "Lista todos os veiculos cadastrados")
     public ResponseEntity<List<Vehicle>> findall(){
         List<Vehicle> vehicles=service.findAll();
         for(Vehicle vehicle:vehicles){
@@ -51,7 +50,6 @@ public class VehicleController {
     }
 
     @GetMapping("/{plate}")
-    @Operation(summary = "Read",description = "Retorna um veículo pela placa")
     public ResponseEntity<Vehicle> findById(@PathVariable String plate){
         Vehicle vehicle=service.read(plate);
         for(Expense expense :vehicle.getExpenses()){
@@ -62,7 +60,6 @@ public class VehicleController {
     }
 
     @PutMapping("/{plate}")
-    @Operation(summary = "Update",description = "Atualiza um veiculo")
     public ResponseEntity<Vehicle> update(@PathVariable String plate,@RequestBody VehicleDto dto){
         Vehicle vehicle=service.update(plate,dto);
         vehicle.add(linkTo(methodOn(VehicleController.class).findById(vehicle.getPlate())).withSelfRel());
@@ -72,20 +69,17 @@ public class VehicleController {
     }
 
     @DeleteMapping("/{plate}")
-    @Operation(summary = "Delete",description = "Exclui um veiculo pela placa")
     public ResponseEntity delete(@PathVariable String plate){
         service.delete(plate);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     @PostMapping("{plate}/images")
-    @Operation(summary = "Add image", description = "Adiciona uma imagem a um veiculo")
     public ResponseEntity addImage(@PathVariable String plate,@RequestBody ImageDto dto){
         service.addImage(plate,dto.toImage());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/{plate}/images")
-    @Operation(summary = "Image List",description = "Lista todas imagens de um veiculo")
     public ResponseEntity<List<Image>> findImages(@PathVariable String plate){
         return ResponseEntity.ok(service.findImages(plate));
     }

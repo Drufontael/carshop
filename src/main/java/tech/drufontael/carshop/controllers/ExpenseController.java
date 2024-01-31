@@ -7,6 +7,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech.drufontael.carshop.documentation.ExpenseDoc;
 import tech.drufontael.carshop.dto.ExpenseDto;
 import tech.drufontael.carshop.model.Expense;
 import tech.drufontael.carshop.services.ExpenseService;
@@ -20,12 +21,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping("/expenses")
 @CrossOrigin(origins = "*")
-public class ExpenseController {
+public class ExpenseController implements ExpenseDoc {
     @Autowired
     ExpenseService service;
 
     @PostMapping("/")
-    @Operation(summary = "Create",description = "Cadastra uma despesa")
     public ResponseEntity<ExpenseDto> create(@RequestBody ExpenseDto obj){
         Expense expense =service.create(obj);
         obj.setId(expense.getId());
@@ -33,7 +33,6 @@ public class ExpenseController {
     }
 
     @GetMapping("/")
-    @Operation(summary = "List",description = "Lista todas as despesas")
     public ResponseEntity<List<Expense>> findall(){
         List<Expense> expenses =service.findAll();
         for(Expense expense : expenses){
@@ -47,7 +46,6 @@ public class ExpenseController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Read",description = "Retorna uma despesa pelo seu identificador")
     public ResponseEntity<Expense> findById(@PathVariable UUID id){
         Expense expense =service.read(id);
         expense.add(linkTo(methodOn(ExpenseController.class).findall()).withRel("Expenses list"));
@@ -58,7 +56,6 @@ public class ExpenseController {
 
 
     @GetMapping("/{plate}/list")
-    @Operation(summary = "List by plate",description = "Retorna as despesas de um veiculo pela sua placa")
     public ResponseEntity<List<Expense>> findExpensesByPlate(@PathVariable String plate){
         List<Expense> expenses=service.findAllByVehiclePlate(plate);
         for (Expense expense:expenses){
