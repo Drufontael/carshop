@@ -14,11 +14,14 @@ public interface ExpenseDoc {
 
     @Operation(summary = "Create",description = "Cadastra uma despesa")
     public ResponseEntity<ExpenseDto> create(ExpenseDto obj);
+
     @Operation(summary = "List",description = "Lista todas as despesas")
-    public ResponseEntity<List<Expense>> findall();
+    public ResponseEntity<List<ExpenseDto>> findall();
+
     @Operation(summary = "Read",description = "Retorna uma despesa pelo seu identificador")
-    public ResponseEntity<Expense> findById(UUID id);
+    public ResponseEntity<ExpenseDto> findById(UUID id);
+
     @Operation(summary = "List by plate",description = "Retorna as despesas de um veiculo pela sua placa")
-    public ResponseEntity<List<Expense>> findExpensesByPlate(String plate);
+    public ResponseEntity<List<ExpenseDto>> findExpensesByPlate(String plate);
 
 }

@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "tb_consigment")
-public class Consignment extends RepresentationModel<Consignment> {
+public class Consignment{
 
     @Id
     @GeneratedValue(generator = "UUID")

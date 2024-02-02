@@ -11,6 +11,7 @@ import tech.drufontael.carshop.model.Vehicle;
 import tech.drufontael.carshop.repositories.ExpenseRepository;
 import tech.drufontael.carshop.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,18 +24,19 @@ public class ExpenseService {
     
     
     @Transactional
-    public Expense create(ExpenseDto dto){
-        Vehicle vehicle=vehicleService.read(dto.getPlate());
+    public ExpenseDto create(ExpenseDto dto){
+        var vehicle=vehicleService.read(dto.getPlate()).toVehicle();
         Expense expense =dto.toExpense();
         expense.setVehicle(vehicle);
         expense =repository.save(expense);
         vehicle.getExpenses().add(expense);
         vehicleService.update(vehicle.getPlate(),vehicle);
-        return expense;
+        return new ExpenseDto(expense);
     }
 
-    public Expense read(UUID id){
-        return repository.findById(id).orElseThrow(()->new ResourseNotFoundException("Spent not found"));
+    public ExpenseDto read(UUID id){
+        return new ExpenseDto(repository.findById(id)
+                .orElseThrow(()->new ResourseNotFoundException("Spent not found")));
     }
 
     public Expense update(UUID id, Object source){
@@ -48,13 +50,20 @@ public class ExpenseService {
         repository.delete(expense);
     }
 
-    public List<Expense> findAll(){
-        return repository.findAll();
+    public List<ExpenseDto> findAll(){
+        List<ExpenseDto> dtos=new ArrayList<>();
+        for(Expense expense:repository.findAll()){
+            dtos.add(new ExpenseDto(expense));
+        }
+        return dtos;
     }
 
-    public List<Expense> findAllByVehiclePlate(String plate){
-        List<Expense> expenses=repository.findByVehiclePlate(plate);
-        return expenses;
+    public List<ExpenseDto> findAllByVehiclePlate(String plate){
+        List<ExpenseDto> dtos=new ArrayList<>();
+        for(Expense expense:repository.findByVehiclePlate(plate)){
+            dtos.add(new ExpenseDto(expense));
+        }
+        return dtos;
     }
 
 

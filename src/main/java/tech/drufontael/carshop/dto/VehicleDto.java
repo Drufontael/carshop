@@ -4,13 +4,15 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.hateoas.RepresentationModel;
 import tech.drufontael.carshop.model.Vehicle;
 import tech.drufontael.carshop.utils.Utils;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class VehicleDto {
+public class VehicleDto extends RepresentationModel<VehicleDto> {
     private String brand;
     private String modelCar;
     private Integer year;
@@ -27,6 +29,11 @@ public class VehicleDto {
     private Boolean tools;
     private Boolean dut;
     private Integer yearDocument;
+    private Double totalExpenses;
+
+    public VehicleDto(Vehicle vehicle){
+        BeanUtils.copyProperties(vehicle,this);
+    }
 
     public Vehicle toVehicle() {
         Vehicle newObj=new Vehicle();

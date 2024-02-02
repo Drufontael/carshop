@@ -28,8 +28,7 @@ public class VehicleController implements VehicleDoc {
     VehicleService service;
 
     @PostMapping
-    public ResponseEntity<Vehicle> create(@RequestBody VehicleDto obj){
-        Vehicle vehicle=obj.toVehicle();
+    public ResponseEntity<VehicleDto> create(@RequestBody VehicleDto vehicle){
         vehicle=service.create(vehicle);
         vehicle.add(linkTo(methodOn(VehicleController.class).findById(vehicle.getPlate())).withSelfRel());
         vehicle.add(linkTo(methodOn(VehicleController.class).findall()).withRel("List of vehicles"));
@@ -37,32 +36,31 @@ public class VehicleController implements VehicleDoc {
     }
 
     @GetMapping
-    public ResponseEntity<List<Vehicle>> findall(){
-        List<Vehicle> vehicles=service.findAll();
-        for(Vehicle vehicle:vehicles){
-            for(Expense expense :vehicle.getExpenses()){
-                expense.add(linkTo(methodOn(ExpenseController.class).findById(expense.getId())).withSelfRel());
-            }
-            Link link= linkTo(VehicleController.class).slash(vehicle.getPlate()).withSelfRel();
-            vehicle.add(link);
+    public ResponseEntity<List<VehicleDto>> findall(){
+        List<VehicleDto> vehicles=service.findAll();
+        for(VehicleDto vehicle:vehicles){
+            vehicle.add(linkTo(methodOn(ExpenseController.class).findExpensesByPlate(vehicle.getPlate()))
+                    .withRel("Expenses"));
+            vehicle.add(linkTo(VehicleController.class).slash(vehicle.getPlate()).withSelfRel());
         }
         return ResponseEntity.status(HttpStatus.OK).body(vehicles);
     }
 
     @GetMapping("/{plate}")
-    public ResponseEntity<Vehicle> findById(@PathVariable String plate){
-        Vehicle vehicle=service.read(plate);
-        for(Expense expense :vehicle.getExpenses()){
-            expense.add(linkTo(methodOn(ExpenseController.class).findById(expense.getId())).withSelfRel());
-        }
+    public ResponseEntity<VehicleDto> findById(@PathVariable String plate){
+        VehicleDto vehicle=service.read(plate);
+        vehicle.add(linkTo(methodOn(ExpenseController.class).findExpensesByPlate(vehicle.getPlate()))
+                .withRel("Expenses"));
         vehicle.add(linkTo(methodOn(VehicleController.class).findall()).withRel("Vehicle list"));
         return ResponseEntity.status(HttpStatus.OK).body(vehicle);
     }
 
     @PutMapping("/{plate}")
-    public ResponseEntity<Vehicle> update(@PathVariable String plate,@RequestBody VehicleDto dto){
-        Vehicle vehicle=service.update(plate,dto);
+    public ResponseEntity<VehicleDto> update(@PathVariable String plate,@RequestBody VehicleDto dto){
+        VehicleDto vehicle=service.update(plate,dto);
         vehicle.add(linkTo(methodOn(VehicleController.class).findById(vehicle.getPlate())).withSelfRel());
+        vehicle.add(linkTo(methodOn(ExpenseController.class).findExpensesByPlate(vehicle.getPlate()))
+                .withRel("Expenses"));
         vehicle.add(linkTo(methodOn(VehicleController.class).findall()).withRel("List of vehicles"));
 
         return ResponseEntity.status(HttpStatus.OK).body(vehicle);
@@ -75,12 +73,12 @@ public class VehicleController implements VehicleDoc {
     }
     @PostMapping("{plate}/images")
     public ResponseEntity addImage(@PathVariable String plate,@RequestBody ImageDto dto){
-        service.addImage(plate,dto.toImage());
+        service.addImage(plate,dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/{plate}/images")
-    public ResponseEntity<List<Image>> findImages(@PathVariable String plate){
+    public ResponseEntity<List<ImageDto>> findImages(@PathVariable String plate){
         return ResponseEntity.ok(service.findImages(plate));
     }
 

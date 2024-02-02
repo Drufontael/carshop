@@ -14,17 +14,17 @@ import java.util.List;
 public interface VehicleDoc {
 
     @Operation(summary = "Create",description = "Cadastra um veiculo")
-    public ResponseEntity<Vehicle> create(VehicleDto obj);
+    public ResponseEntity<VehicleDto> create(VehicleDto obj);
 
     @Operation(summary = "List All",description = "Lista todos os veiculos cadastrados")
-    public ResponseEntity<List<Vehicle>> findall();
+    public ResponseEntity<List<VehicleDto>> findall();
 
 
     @Operation(summary = "Read",description = "Retorna um veículo pela placa")
-    public ResponseEntity<Vehicle> findById(String plate);
+    public ResponseEntity<VehicleDto> findById(String plate);
 
     @Operation(summary = "Update",description = "Atualiza um veiculo")
-    public ResponseEntity<Vehicle> update(String plate,VehicleDto dto);
+    public ResponseEntity<VehicleDto> update(String plate,VehicleDto dto);
 
 
     @Operation(summary = "Delete",description = "Exclui um veiculo pela placa")
@@ -35,7 +35,7 @@ public interface VehicleDoc {
 
 
     @Operation(summary = "Image List",description = "Lista todas imagens de um veiculo")
-    public ResponseEntity<List<Image>> findImages(String plate);
+    public ResponseEntity<List<ImageDto>> findImages(String plate);
 
 
 

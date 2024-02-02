@@ -27,18 +27,16 @@ public class ExpenseController implements ExpenseDoc {
 
     @PostMapping
     public ResponseEntity<ExpenseDto> create(@RequestBody ExpenseDto obj){
-        Expense expense =service.create(obj);
-        obj.setId(expense.getId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(obj);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(obj));
     }
 
     @GetMapping
-    public ResponseEntity<List<Expense>> findall(){
-        List<Expense> expenses =service.findAll();
-        for(Expense expense : expenses){
+    public ResponseEntity<List<ExpenseDto>> findall(){
+        List<ExpenseDto> expenses =service.findAll();
+        for(ExpenseDto expense : expenses){
             Link link= linkTo(ExpenseController.class).slash(expense.getId()).withSelfRel();
             expense.add(link);
-            expense.add(linkTo(methodOn(VehicleController.class).findById(expense.getVehicle().getPlate()))
+            expense.add(linkTo(methodOn(VehicleController.class).findById(expense.getPlate()))
                     .withRel("Vehicle"));
         }
         Link link=linkTo(ExpenseController.class).withSelfRel();
@@ -46,19 +44,19 @@ public class ExpenseController implements ExpenseDoc {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Expense> findById(@PathVariable UUID id){
-        Expense expense =service.read(id);
+    public ResponseEntity<ExpenseDto> findById(@PathVariable UUID id){
+        ExpenseDto expense =service.read(id);
         expense.add(linkTo(methodOn(ExpenseController.class).findall()).withRel("Expenses list"));
-        expense.add(linkTo(methodOn(VehicleController.class).findById(expense.getVehicle().getPlate()))
+        expense.add(linkTo(methodOn(VehicleController.class).findById(expense.getPlate()))
                 .withRel("Vehicle"));
         return ResponseEntity.status(HttpStatus.OK).body(expense);
     }
 
 
     @GetMapping("/{plate}/list")
-    public ResponseEntity<List<Expense>> findExpensesByPlate(@PathVariable String plate){
-        List<Expense> expenses=service.findAllByVehiclePlate(plate);
-        for (Expense expense:expenses){
+    public ResponseEntity<List<ExpenseDto>> findExpensesByPlate(@PathVariable String plate){
+        List<ExpenseDto> expenses=service.findAllByVehiclePlate(plate);
+        for (ExpenseDto expense:expenses){
             expense.add(linkTo(methodOn(ExpenseController.class).findById(expense.getId())).withSelfRel());
         }
         return ResponseEntity.ok(expenses);

@@ -12,7 +12,7 @@ import org.springframework.hateoas.RepresentationModel;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "tb_consignor")
-public class Consignor extends RepresentationModel<Consignor> {
+public class Consignor{
     private String name;
     private String address;
     @Id

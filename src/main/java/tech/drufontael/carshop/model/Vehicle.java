@@ -13,7 +13,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @Entity(name = "tb_vehicle")
-public class Vehicle extends RepresentationModel<Vehicle> {
+public class Vehicle{
     private String brand;
     private String modelCar;
     private Integer year;
@@ -31,6 +31,7 @@ public class Vehicle extends RepresentationModel<Vehicle> {
     private Boolean tools;
     private Boolean dut;
     private Integer yearDocument;
+    private Double totalExpenses;
     @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "vehicle_plate")
     private List<Expense> expenses =new ArrayList<>();
@@ -40,9 +41,6 @@ public class Vehicle extends RepresentationModel<Vehicle> {
 
     public Double getTotalExpenses(){
         if(expenses.size()==0) return 0.0;
-        System.out.println("Entrou no getter");
         return expenses.stream().mapToDouble(Expense::getValor).sum();
     }
-
-
 }

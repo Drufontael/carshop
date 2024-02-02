@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "tb_expense")
-public class Expense extends RepresentationModel<Expense> {
+public class Expense{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
