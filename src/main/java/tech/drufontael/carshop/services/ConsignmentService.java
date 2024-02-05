@@ -1,5 +1,6 @@
 package tech.drufontael.carshop.services;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tech.drufontael.carshop.dto.ConsignmentDto;
@@ -37,9 +38,13 @@ public class ConsignmentService {
                 .orElseThrow(()->new ResourseNotFoundException("Consignment not found")));
     }
 
-    public ConsignmentDto update(UUID id, Object source){
+    public ConsignmentDto update(UUID id, ConsignmentDto source){
         var target=repository.findById(id).orElseThrow(()->new ResourseNotFoundException("Consignment not found."));
         Utils.copyNonNullProperties(source,target);
+        if(source.getConsignorRegister()!=null) target.setConsignor(consignorService.read(source.getConsignorRegister())
+                .toConsignor());
+        if(source.getVehiclePlate()!=null) target.setVehicle(vehicleService.read(source.getVehiclePlate())
+                .toVehicle());
         return new ConsignmentDto(repository.save(target));
     }
 
@@ -54,6 +59,20 @@ public class ConsignmentService {
             dtos.add(new ConsignmentDto(consignment));
         }
         return dtos;
+    }
+
+    public List<ConsignmentDto> findByConsignorRegister(String register){
+        consignorService.read(register);
+        List<ConsignmentDto> list=new ArrayList<>();
+        for(Consignment consignment:repository.findByConsignorRegister(register)){
+            list.add(new ConsignmentDto(consignment));
+        }
+        return list;
+    }
+
+    public ConsignmentDto findByVehiclePlate(String plate){
+        vehicleService.read(plate);
+        return new ConsignmentDto(repository.findByVehiclePlate(plate));
     }
 
 

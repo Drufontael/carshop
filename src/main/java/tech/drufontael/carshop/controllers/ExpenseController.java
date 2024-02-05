@@ -58,6 +58,7 @@ public class ExpenseController implements ExpenseDoc {
         List<ExpenseDto> expenses=service.findAllByVehiclePlate(plate);
         for (ExpenseDto expense:expenses){
             expense.add(linkTo(methodOn(ExpenseController.class).findById(expense.getId())).withSelfRel());
+            expense.add(linkTo(methodOn(VehicleController.class).findById(plate)).withRel("Vehicle"));
         }
         return ResponseEntity.ok(expenses);
     }

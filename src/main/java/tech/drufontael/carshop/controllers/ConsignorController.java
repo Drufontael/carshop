@@ -23,7 +23,7 @@ public class ConsignorController implements ConsignorDoc {
     private ConsignorService service;
 
     @PostMapping
-    public ResponseEntity<ConsignorDto> create(ConsignorDto consignor) {
+    public ResponseEntity<ConsignorDto> create(@RequestBody ConsignorDto consignor) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(consignor));
     }
 

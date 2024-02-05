@@ -41,6 +41,7 @@ public class VehicleController implements VehicleDoc {
         for(VehicleDto vehicle:vehicles){
             vehicle.add(linkTo(methodOn(ExpenseController.class).findExpensesByPlate(vehicle.getPlate()))
                     .withRel("Expenses"));
+            vehicle.add(linkTo(methodOn(VehicleController.class).findImages(vehicle.getPlate())).withRel("Images"));
             vehicle.add(linkTo(VehicleController.class).slash(vehicle.getPlate()).withSelfRel());
         }
         return ResponseEntity.status(HttpStatus.OK).body(vehicles);
@@ -51,6 +52,7 @@ public class VehicleController implements VehicleDoc {
         VehicleDto vehicle=service.read(plate);
         vehicle.add(linkTo(methodOn(ExpenseController.class).findExpensesByPlate(vehicle.getPlate()))
                 .withRel("Expenses"));
+        vehicle.add(linkTo(methodOn(VehicleController.class).findImages(plate)).withRel("Images"));
         vehicle.add(linkTo(methodOn(VehicleController.class).findall()).withRel("Vehicle list"));
         return ResponseEntity.status(HttpStatus.OK).body(vehicle);
     }
