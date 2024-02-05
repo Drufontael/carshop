@@ -56,4 +56,4 @@ A API utiliza o HATEOAS para fornecer links relacionados aos recursos. Certifiqu
 Sinta-se à vontade para contribuir para este projeto. Abra uma issue para discutir novos recursos ou problemas encontrados.
 
 ## Licença
-Este projeto é licenciado sob a Licença MIT.
+Este projeto é licenciado sob a [License MIT](https://github.com/Drufontael/carshop/blob/main/LICENSE).
