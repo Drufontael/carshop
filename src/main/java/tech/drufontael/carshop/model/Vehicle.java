@@ -2,7 +2,6 @@ package tech.drufontael.carshop.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.hateoas.RepresentationModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +39,7 @@ public class Vehicle{
     private List<Image> images=new ArrayList<>();
 
     public Double getTotalExpenses(){
-        if(expenses.size()==0) return 0.0;
+        if(expenses.isEmpty()) return 0.0;
         return expenses.stream().mapToDouble(Expense::getValor).sum();
     }
 }

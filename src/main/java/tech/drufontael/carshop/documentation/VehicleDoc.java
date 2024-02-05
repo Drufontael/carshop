@@ -5,8 +5,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import tech.drufontael.carshop.dto.ImageDto;
 import tech.drufontael.carshop.dto.VehicleDto;
-import tech.drufontael.carshop.model.Image;
-import tech.drufontael.carshop.model.Vehicle;
 
 import java.util.List;
 
@@ -14,28 +12,28 @@ import java.util.List;
 public interface VehicleDoc {
 
     @Operation(summary = "Create",description = "Cadastra um veiculo")
-    public ResponseEntity<VehicleDto> create(VehicleDto obj);
+    ResponseEntity<VehicleDto> create(VehicleDto obj);
 
     @Operation(summary = "List All",description = "Lista todos os veiculos cadastrados")
-    public ResponseEntity<List<VehicleDto>> findall();
+    ResponseEntity<List<VehicleDto>> findall();
 
 
     @Operation(summary = "Read",description = "Retorna um veículo pela placa")
-    public ResponseEntity<VehicleDto> findById(String plate);
+    ResponseEntity<VehicleDto> findById(String plate);
 
     @Operation(summary = "Update",description = "Atualiza um veiculo")
-    public ResponseEntity<VehicleDto> update(String plate,VehicleDto dto);
+    ResponseEntity<VehicleDto> update(String plate, VehicleDto dto);
 
 
     @Operation(summary = "Delete",description = "Exclui um veiculo pela placa")
-    public ResponseEntity delete(String plate);
+    ResponseEntity delete(String plate);
 
     @Operation(summary = "Add image", description = "Adiciona uma imagem a um veiculo")
-    public ResponseEntity addImage(String plate,ImageDto dto);
+    ResponseEntity addImage(String plate, ImageDto dto);
 
 
     @Operation(summary = "Image List",description = "Lista todas imagens de um veiculo")
-    public ResponseEntity<List<ImageDto>> findImages(String plate);
+    ResponseEntity<List<ImageDto>> findImages(String plate);
 
 
 

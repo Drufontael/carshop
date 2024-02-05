@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import tech.drufontael.carshop.documentation.ConsignorDoc;
 import tech.drufontael.carshop.dto.ConsignorDto;
-import tech.drufontael.carshop.model.Consignor;
 import tech.drufontael.carshop.services.ConsignorService;
 
 import java.util.List;

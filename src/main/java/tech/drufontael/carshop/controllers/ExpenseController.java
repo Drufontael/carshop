@@ -1,15 +1,12 @@
 package tech.drufontael.carshop.controllers;
 
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.drufontael.carshop.documentation.ExpenseDoc;
 import tech.drufontael.carshop.dto.ExpenseDto;
-import tech.drufontael.carshop.model.Expense;
 import tech.drufontael.carshop.services.ExpenseService;
 
 import java.util.List;

@@ -1,18 +1,13 @@
 package tech.drufontael.carshop.controllers;
 
 
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.drufontael.carshop.documentation.VehicleDoc;
 import tech.drufontael.carshop.dto.ImageDto;
 import tech.drufontael.carshop.dto.VehicleDto;
-import tech.drufontael.carshop.model.Expense;
-import tech.drufontael.carshop.model.Image;
-import tech.drufontael.carshop.model.Vehicle;
 import tech.drufontael.carshop.services.VehicleService;
 
 import java.util.List;

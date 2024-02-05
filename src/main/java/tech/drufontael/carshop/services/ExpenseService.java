@@ -7,7 +7,6 @@ import tech.drufontael.carshop.dto.ExpenseDto;
 import tech.drufontael.carshop.exceptions.ResourseNotFoundException;
 import tech.drufontael.carshop.model.Expense;
 
-import tech.drufontael.carshop.model.Vehicle;
 import tech.drufontael.carshop.repositories.ExpenseRepository;
 import tech.drufontael.carshop.utils.Utils;
 

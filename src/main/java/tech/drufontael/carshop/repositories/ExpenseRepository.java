@@ -8,6 +8,6 @@ import java.util.UUID;
 
 public interface ExpenseRepository extends JpaRepository<Expense, UUID> {
 
-public List<Expense> findByVehiclePlate(String plate);
+List<Expense> findByVehiclePlate(String plate);
 
 }

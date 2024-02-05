@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ConsignmentRepository extends JpaRepository<Consignment, UUID> {
-    public List<Consignment> findByConsignorRegister(String register);
-    public Consignment findByVehiclePlate(String plate);
+    List<Consignment> findByConsignorRegister(String register);
+    Consignment findByVehiclePlate(String plate);
 }
