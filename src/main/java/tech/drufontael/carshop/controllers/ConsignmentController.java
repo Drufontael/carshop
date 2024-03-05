@@ -1,7 +1,10 @@
 package tech.drufontael.carshop.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.drufontael.carshop.documentation.ConsignmentDoc;
@@ -15,7 +18,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/consignments")
+@RequestMapping("api/consignments")
 public class ConsignmentController implements ConsignmentDoc {
 
     @Autowired
@@ -26,33 +29,33 @@ public class ConsignmentController implements ConsignmentDoc {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(consignment));
     }
 
-    @GetMapping("/{register}")
+    @GetMapping("/{id}")
     public ResponseEntity<ConsignmentDto> findByRegister(@PathVariable UUID id) {
         var consignment=service.read(id);
-        consignment.add(linkTo(methodOn(ConsignmentController.class)
-                .findAll()).withRel("Consignments list"));
+        /*consignment.add(linkTo(methodOn(ConsignmentController.class)
+                .findAll()).withRel("Consignments list"));*/
         return ResponseEntity.ok(consignment);
     }
 
     @GetMapping
     public ResponseEntity<List<ConsignmentDto>> findAll() {
         var list=service.findAll();
-        for(ConsignmentDto consignment:list){
+       /* for(ConsignmentDto consignment:list){
             consignment.add(linkTo(methodOn(ConsignmentController.class)
                     .findByRegister(consignment.getId()))
                     .withSelfRel());
-        }
+        }*/
         return ResponseEntity.ok(list);
     }
 
-    @PutMapping("/{register}")
+    @PutMapping("/{id}")
     public ResponseEntity<ConsignmentDto> update(@PathVariable UUID id, @RequestBody ConsignmentDto obj) {
         var updateConsignment=service.update(id,obj);
         updateConsignment.add(linkTo(methodOn(ConsignmentController.class).findAll()).withRel("Consignments list"));
         return ResponseEntity.ok(updateConsignment);
     }
 
-    @DeleteMapping("/{register}")
+    @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
@@ -66,5 +69,24 @@ public class ConsignmentController implements ConsignmentDoc {
     @Override
     public ResponseEntity<ConsignmentDto> findByVehiclePlate(String plate) {
         return null;
+    }
+
+    @GetMapping("/pdfContract/{id}")
+    public ResponseEntity<ByteArrayResource> downloadPDF(@PathVariable UUID id) {
+         byte[] pdfContent = service.createPdfContract(id,"D:\\Geral");
+
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=arquivo.pdf");
+
+
+        ByteArrayResource resource = new ByteArrayResource(pdfContent);
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .contentLength(pdfContent.length)
+                .body(resource);
     }
 }

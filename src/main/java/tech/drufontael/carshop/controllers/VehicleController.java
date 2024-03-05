@@ -16,7 +16,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/vehicles")
+@RequestMapping("api/vehicles")
 @CrossOrigin(origins = "*")
 public class VehicleController implements VehicleDoc {
     @Autowired

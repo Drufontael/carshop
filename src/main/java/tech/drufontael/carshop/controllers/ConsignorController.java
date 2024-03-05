@@ -15,7 +15,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/consignors")
+@RequestMapping("api/consignors")
 public class ConsignorController implements ConsignorDoc {
 
     @Autowired
@@ -30,7 +30,7 @@ public class ConsignorController implements ConsignorDoc {
     public ResponseEntity<ConsignorDto> findByRegister(@PathVariable String register) {
         var consignor=service.read(register);
         consignor.add(linkTo(methodOn(ConsignorController.class)
-                .findAll()).withRel("Consignors list"));
+                .findAll()).withRel("ConsignorsList"));
         return ResponseEntity.ok(consignor);
     }
 
@@ -48,7 +48,7 @@ public class ConsignorController implements ConsignorDoc {
     @PutMapping("/{register}")
     public ResponseEntity<ConsignorDto> update(@PathVariable String register, @RequestBody ConsignorDto obj) {
         var updateConsignor=service.update(register,obj);
-        updateConsignor.add(linkTo(methodOn(ConsignorController.class).findAll()).withRel("Consignors list"));
+        updateConsignor.add(linkTo(methodOn(ConsignorController.class).findAll()).withRel("ConsignorsList"));
         return ResponseEntity.ok(updateConsignor);
     }
 

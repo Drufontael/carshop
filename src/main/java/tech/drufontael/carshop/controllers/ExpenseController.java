@@ -16,7 +16,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/expenses")
+@RequestMapping("api/expenses")
 @CrossOrigin(origins = "*")
 public class ExpenseController implements ExpenseDoc {
     @Autowired
