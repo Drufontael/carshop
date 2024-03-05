@@ -37,6 +37,7 @@ public class Vehicle{
     @OneToMany(cascade = CascadeType.REMOVE)
     //@JoinColumn(name = "vehicle_plate")
     private List<Image> images=new ArrayList<>();
+    private Boolean active;
 
     public Double getTotalExpenses(){
         if(expenses.isEmpty()) return 0.0;

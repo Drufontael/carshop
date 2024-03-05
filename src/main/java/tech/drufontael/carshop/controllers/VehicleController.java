@@ -1,6 +1,7 @@
 package tech.drufontael.carshop.controllers;
 
 
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +32,9 @@ public class VehicleController implements VehicleDoc {
     }
 
     @GetMapping
-    public ResponseEntity<List<VehicleDto>> findall(){
-        List<VehicleDto> vehicles=service.findAll();
+    public ResponseEntity<List<VehicleDto>> findall(@RequestParam(value = "active",required = false) Boolean... var){
+        if(var==null) var=new Boolean[]{};
+        List<VehicleDto> vehicles=service.findAll(var);
         for(VehicleDto vehicle:vehicles){
             vehicle.add(linkTo(methodOn(ExpenseController.class).findExpensesByPlate(vehicle.getPlate()))
                     .withRel("Expenses"));

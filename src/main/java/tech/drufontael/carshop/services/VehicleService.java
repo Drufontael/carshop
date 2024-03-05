@@ -53,7 +53,19 @@ public class VehicleService {
         repository.delete(vehicle);
     }
 
-    public List<VehicleDto> findAll(){
+
+    public  List<VehicleDto> findAll(Boolean... var){
+        if(var.length==0) return this.findAll();
+        List<VehicleDto> dtoList=new ArrayList<>();
+        List<Vehicle> list=var[0]?repository.findByActiveTrue():repository.findByActiveFalse();
+        for(Vehicle vehicle:list){
+            dtoList.add(new VehicleDto(vehicle));
+        }
+        return dtoList;
+    }
+
+
+    private List<VehicleDto> findAll(){
        List<Vehicle> vehicles=repository.findAll();
        List<VehicleDto> dtos=new ArrayList<>();
        for (Vehicle vehicle:vehicles){

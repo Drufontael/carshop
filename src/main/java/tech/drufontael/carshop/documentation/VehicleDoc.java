@@ -15,7 +15,7 @@ public interface VehicleDoc {
     ResponseEntity<VehicleDto> create(VehicleDto obj);
 
     @Operation(summary = "List All",description = "Lista todos os veiculos cadastrados")
-    ResponseEntity<List<VehicleDto>> findall();
+    ResponseEntity<List<VehicleDto>> findall(Boolean... var);
 
 
     @Operation(summary = "Read",description = "Retorna um veículo pela placa")
