@@ -35,7 +35,7 @@ public class ConsignmentService {
     
 
     public ConsignmentDto create(ConsignmentDto consignment){
-        var consignor=consignorService.read(consignment.getConsignorRegister());
+        var consignor=consignorService.read(consignment.getConsignorId());
         var vehicle=vehicleService.read(consignment.getVehiclePlate());
         var newConsignment = consignment.toConsignment();
         if(newConsignment.getDate()==null) newConsignment.setDate(LocalDate.now());
@@ -53,7 +53,7 @@ public class ConsignmentService {
     public ConsignmentDto update(UUID id, ConsignmentDto source){
         var target=repository.findById(id).orElseThrow(()->new ResourseNotFoundException("Consignment not found."));
         Utils.copyNonNullProperties(source,target);
-        if(source.getConsignorRegister()!=null) target.setConsignor(consignorService.read(source.getConsignorRegister())
+        if(source.getConsignorId()!=null) target.setConsignor(consignorService.read(source.getConsignorId())
                 .toConsignor());
         if(source.getVehiclePlate()!=null) target.setVehicle(vehicleService.read(source.getVehiclePlate())
                 .toVehicle());
@@ -71,15 +71,6 @@ public class ConsignmentService {
             dtos.add(new ConsignmentDto(consignment));
         }
         return dtos;
-    }
-
-    public List<ConsignmentDto> findByConsignorRegister(String register){
-        consignorService.read(register);
-        List<ConsignmentDto> list=new ArrayList<>();
-        for(Consignment consignment:repository.findByConsignorRegister(register)){
-            list.add(new ConsignmentDto(consignment));
-        }
-        return list;
     }
 
     public ConsignmentDto findByVehiclePlate(String plate){

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import tech.drufontael.carshop.dto.ConsignorDto;
 
 import java.util.List;
+import java.util.UUID;
 
 @Tag(name = "Consignante", description = "Controlador de cadastro de consignantes")
 public interface ConsignorDoc {
@@ -13,14 +14,14 @@ public interface ConsignorDoc {
     ResponseEntity<ConsignorDto> create(ConsignorDto dto);
 
     @Operation(method = "Get",summary = "Read",description = "Retorna um consignante pelo CPF")
-    ResponseEntity<ConsignorDto> findByRegister(String register);
+    ResponseEntity<ConsignorDto> findById(UUID id);
 
     @Operation(method = "Get",summary = "Find all",description = "Retorna a lista de consignantes")
     ResponseEntity<List<ConsignorDto>> findAll();
 
     @Operation(method = "Put",summary = "Update",description = "Atualiza um consignante")
-    ResponseEntity<ConsignorDto> update(String register, ConsignorDto obj);
+    ResponseEntity<ConsignorDto> update(UUID id, ConsignorDto obj);
 
     @Operation(method = "Delete",summary = "Delete",description = "Exclui um consignante")
-    ResponseEntity delete(String register);
+    ResponseEntity delete(UUID id);
 }

@@ -28,8 +28,7 @@ public class ExpenseService {
         Expense expense =dto.toExpense();
         expense.setVehicle(vehicle);
         expense =repository.save(expense);
-        vehicle.getExpenses().add(expense);
-        vehicleService.update(vehicle.getPlate(),vehicle);
+
         return new ExpenseDto(expense);
     }
 

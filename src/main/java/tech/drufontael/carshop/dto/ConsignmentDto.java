@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ConsignmentDto  extends RepresentationModel<ConsignmentDto> {
     private UUID id;
-    private String consignorRegister;
+    private UUID consignorId;
     private String vehiclePlate;
     private String location;
     private LocalDate date;
@@ -24,7 +24,7 @@ public class ConsignmentDto  extends RepresentationModel<ConsignmentDto> {
 
     public ConsignmentDto(Consignment consignment){
         BeanUtils.copyProperties(consignment,this);
-        setConsignorRegister(consignment.getConsignor().getRegister());
+        setConsignorId(consignment.getConsignor().getId());
         setVehiclePlate(consignment.getVehicle().getPlate());
     }
 

@@ -10,6 +10,7 @@ import tech.drufontael.carshop.dto.ConsignorDto;
 import tech.drufontael.carshop.services.ConsignorService;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -26,9 +27,9 @@ public class ConsignorController implements ConsignorDoc {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(consignor));
     }
 
-    @GetMapping("/{register}")
-    public ResponseEntity<ConsignorDto> findByRegister(@PathVariable String register) {
-        var consignor=service.read(register);
+    @GetMapping("/{id}")
+    public ResponseEntity<ConsignorDto> findById(@PathVariable UUID id) {
+        var consignor=service.read(id);
         consignor.add(linkTo(methodOn(ConsignorController.class)
                 .findAll()).withRel("ConsignorsList"));
         return ResponseEntity.ok(consignor);
@@ -39,22 +40,22 @@ public class ConsignorController implements ConsignorDoc {
         var list=service.findAll();
         for(ConsignorDto consignor:list){
             consignor.add(linkTo(methodOn(ConsignorController.class)
-                    .findByRegister(consignor.getRegister()))
+                    .findById(consignor.getId()))
                     .withSelfRel());
         }
         return ResponseEntity.ok(list);
     }
 
-    @PutMapping("/{register}")
-    public ResponseEntity<ConsignorDto> update(@PathVariable String register, @RequestBody ConsignorDto obj) {
-        var updateConsignor=service.update(register,obj);
+    @PutMapping("/{id}")
+    public ResponseEntity<ConsignorDto> update(@PathVariable UUID id, @RequestBody ConsignorDto obj) {
+        var updateConsignor=service.update(id,obj);
         updateConsignor.add(linkTo(methodOn(ConsignorController.class).findAll()).withRel("ConsignorsList"));
         return ResponseEntity.ok(updateConsignor);
     }
 
-    @DeleteMapping("/{register}")
-    public ResponseEntity delete(@PathVariable String register) {
-        service.delete(register);
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable UUID id) {
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

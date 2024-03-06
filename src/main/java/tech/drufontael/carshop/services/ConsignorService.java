@@ -10,6 +10,7 @@ import tech.drufontael.carshop.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ConsignorService {
@@ -22,18 +23,18 @@ public class ConsignorService {
         return new ConsignorDto(repository.save(consignor.toConsignor()));
     }
 
-    public ConsignorDto read(String id){
+    public ConsignorDto read(UUID id){
         return new ConsignorDto(repository.findById(id)
                 .orElseThrow(()->new ResourseNotFoundException("Consignor not found")));
     }
 
-    public ConsignorDto update(String id,Object source){
+    public ConsignorDto update(UUID id,Object source){
         var target=repository.findById(id).orElseThrow(()->new ResourseNotFoundException("Consignor not found."));
         Utils.copyNonNullProperties(source,target);
         return new ConsignorDto(repository.save(target));
     }
 
-    public void delete(String id){
+    public void delete(UUID id){
         var consignor=repository.findById(id).orElseThrow(()->new ResourseNotFoundException("Consignor not found"));
         repository.delete(consignor);
     }
