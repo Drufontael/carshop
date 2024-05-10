@@ -2,27 +2,22 @@ package tech.drufontael.carshop.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tech.drufontael.carshop.dto.ImageDto;
+import org.springframework.web.bind.annotation.PathVariable;
 import tech.drufontael.carshop.dto.VehicleDto;
 import tech.drufontael.carshop.exceptions.ResourceAlreadyExistsException;
 import tech.drufontael.carshop.exceptions.ResourseNotFoundException;
-import tech.drufontael.carshop.model.Image;
 import tech.drufontael.carshop.model.Vehicle;
-import tech.drufontael.carshop.repositories.ImageRepository;
 import tech.drufontael.carshop.repositories.VehicleRepository;
 import tech.drufontael.carshop.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class VehicleService {
     @Autowired
     private VehicleRepository repository;
-    @Autowired
-    private ImageRepository imageRepository;
-
-
 
 
     public VehicleDto create(VehicleDto dto){
@@ -34,6 +29,7 @@ public class VehicleService {
         }catch (ResourseNotFoundException e){
             vehicle.setPlate(plate);
         }
+        vehicle.setActive(true);
         return new VehicleDto(repository.save(vehicle));
     }
 
@@ -74,20 +70,32 @@ public class VehicleService {
        return dtos;
     }
 
-    public void addImage(String plate, ImageDto obj){
-        Image image=imageRepository.save(obj.toImage());
-        var vehicle=repository.findById(plate).orElseThrow(()->new ResourseNotFoundException("Vehicle not found."));
-        vehicle.getImages().add(image);
+    public void addImage(String plate,String description,String path){
+        Vehicle vehicle=repository.findById(plate).orElseThrow(()->new ResourseNotFoundException("Vehicle not found"));
+        vehicle.getImages().put(description,path);
+        repository.save(vehicle);
+    }
+
+    public Map<String,String> getImages(String plate){
+        Vehicle vehicle=repository.findById(plate).orElseThrow(()->new ResourseNotFoundException("Vehicle not found"));
+        return vehicle.getImages();
+    }
+
+    public String getImageByDescription(String plate,String description){
+        Vehicle vehicle=repository.findById(plate).orElseThrow(()->new ResourseNotFoundException("Vehicle not found"));
+        return vehicle.getImages().get(description);
+    }
+
+    public void deleteImage(String plate,String description){
+        Vehicle vehicle=repository.findById(plate).orElseThrow(()->new ResourseNotFoundException("Vehicle not found"));
+        vehicle.getImages().remove(description);
+    }
+
+    public void updateImage(String plate,String description,String newPath){
+        Vehicle vehicle=repository.findById(plate).orElseThrow(()->new ResourseNotFoundException("Vehicle not found"));
+        vehicle.getImages().put(description,newPath);
         repository.save(vehicle);
     }
 
 
-    public List<ImageDto> findImages(String plate) {
-        var vehicle=repository.findById(plate).orElseThrow(()->new ResourseNotFoundException("Vehicle not found."));
-        List<ImageDto> dtos=new ArrayList<>();
-        for(Image image:vehicle.getImages()){
-            dtos.add(new ImageDto(image));
-        }
-        return dtos;
-    }
 }

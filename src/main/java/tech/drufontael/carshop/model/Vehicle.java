@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -34,9 +35,11 @@ public class Vehicle{
     @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "vehicle_plate")
     private List<Expense> expenses =new ArrayList<>();
-    @OneToMany(cascade = CascadeType.REMOVE)
-    //@JoinColumn(name = "vehicle_plate")
-    private List<Image> images=new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "tb-images",joinColumns = @JoinColumn(name = "vehiclePlate"))
+    @MapKeyColumn(name = "description")
+    @Column(name = "path")
+    private Map<String,String> images;
     private Boolean active;
 
     public Double getTotalExpenses(){

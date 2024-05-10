@@ -1,17 +1,16 @@
 package tech.drufontael.carshop.controllers;
 
 
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.drufontael.carshop.documentation.VehicleDoc;
-import tech.drufontael.carshop.dto.ImageDto;
 import tech.drufontael.carshop.dto.VehicleDto;
 import tech.drufontael.carshop.services.VehicleService;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -38,7 +37,7 @@ public class VehicleController implements VehicleDoc {
         for(VehicleDto vehicle:vehicles){
             vehicle.add(linkTo(methodOn(ExpenseController.class).findExpensesByPlate(vehicle.getPlate()))
                     .withRel("Expenses"));
-            vehicle.add(linkTo(methodOn(VehicleController.class).findImages(vehicle.getPlate())).withRel("Images"));
+
             vehicle.add(linkTo(VehicleController.class).slash(vehicle.getPlate()).withSelfRel());
         }
         return ResponseEntity.status(HttpStatus.OK).body(vehicles);
@@ -49,7 +48,7 @@ public class VehicleController implements VehicleDoc {
         VehicleDto vehicle=service.read(plate);
         vehicle.add(linkTo(methodOn(ExpenseController.class).findExpensesByPlate(vehicle.getPlate()))
                 .withRel("Expenses"));
-        vehicle.add(linkTo(methodOn(VehicleController.class).findImages(plate)).withRel("Images"));
+
         vehicle.add(linkTo(methodOn(VehicleController.class).findall()).withRel("Vehicle list"));
         return ResponseEntity.status(HttpStatus.OK).body(vehicle);
     }
@@ -70,16 +69,21 @@ public class VehicleController implements VehicleDoc {
         service.delete(plate);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-    @PostMapping("{plate}/images")
-    public ResponseEntity addImage(@PathVariable String plate,@RequestBody ImageDto dto){
-        service.addImage(plate,dto);
-        return new ResponseEntity<>(HttpStatus.OK);
+
+    @PutMapping("/{plate}/img")
+    public ResponseEntity addImage(@PathVariable String plate,
+                                   @RequestParam(name = "describe") String description,
+                                   @RequestParam(name = "path") String path){
+        service.addImage(plate,description,path);
+        return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{plate}/images")
-    public ResponseEntity<List<ImageDto>> findImages(@PathVariable String plate){
-        return ResponseEntity.ok(service.findImages(plate));
+    @GetMapping("/{plate}/img")
+    public ResponseEntity<Map<String,String>> addImage(@PathVariable String plate){
+        return ResponseEntity.ok(service.getImages(plate));
     }
+
+
 
 
 }
