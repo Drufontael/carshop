@@ -1,0 +1,45 @@
+<mat-table [dataSource]="expenses" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="date">
+    <mat-header-cell *matHeaderCellDef> Data </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.date | date}} </mat-cell>
+    <mat-footer-cell *matFooterCellDef>  </mat-footer-cell>
+  </ng-container>
+
+
+  <ng-container matColumnDef="description">
+    <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+    <mat-footer-cell *matFooterCellDef> Total </mat-footer-cell>
+  </ng-container>
+
+
+  <ng-container matColumnDef="valor">
+    <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.valor | currency}} </mat-cell>
+    <mat-footer-cell *matFooterCellDef> {{getTotalValue() | currency}} </mat-footer-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef>
+      <button mat-mini-fab color="accent" aria-label="Adiciona uma despesa"  (click)="onAdd()" matTooltip="Adicionar despesa">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button mat-icon-button color="primary" aria-label="Editar despesa" (click)="onEdit(element.id)" matTooltip="Editar despesa">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" aria-label="Deletar despesa" (click)="onDelete(element.id)" matTooltip="Remover despesa">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+    <mat-footer-cell *matFooterCellDef>  </mat-footer-cell>
+  </ng-container>
+
+
+
+  <mat-header-row *matHeaderRowDef="displayedColumns,sticky: true"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+</mat-table>

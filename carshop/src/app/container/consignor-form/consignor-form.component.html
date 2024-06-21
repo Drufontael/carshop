@@ -1,0 +1,40 @@
+<mat-card>
+  <mat-card-header>
+    <mat-toolbar color="primary">
+      <span>Informações do Consignante</span>
+    </mat-toolbar>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="form" class="min-width">
+
+      <mat-form-field class="full-width">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Endereço</mat-label>
+        <input matInput formControlName="address">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>CPF</mat-label>
+        <input matInput formControlName="register">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Identidade</mat-label>
+        <input matInput formControlName="identity">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Telefone/Celular</mat-label>
+        <input matInput formControlName="phone">
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+    <button mat-raised-button (click)="onCancel()">Cancelar</button>
+  </mat-card-actions>
+</mat-card>

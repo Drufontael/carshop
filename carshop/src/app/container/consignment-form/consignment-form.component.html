@@ -1,0 +1,51 @@
+<mat-card>
+  <mat-card-header>
+    <mat-toolbar color="primary">
+      <span>Informações do Consignante</span>
+    </mat-toolbar>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="form" class="min-width">
+
+      <mat-form-field class="full-width">
+        <mat-label>Consignante</mat-label>
+        <mat-select formControlName="consignorId">
+          <mat-option value=''> </mat-option>
+          <mat-option *ngFor="let consignor of consignors" [value]="consignor.id">
+            {{consignor.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field class="full-width">
+        <mat-label>Veiculo</mat-label>
+        <mat-select formControlName="vehiclePlate">
+          <mat-option value=''> </mat-option>
+          <mat-option *ngFor="let vehicle of vehicles" [value]="vehicle.plate">
+            {{vehicle.brand}} - {{vehicle.modelCar}} - Placa: {{vehicle.plate}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Localização</mat-label>
+        <input matInput formControlName="location">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Data</mat-label>
+        <input matInput type="date" formControlName="date">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Hora</mat-label>
+        <input matInput type="time" formControlName="entryTime">
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+    <button mat-raised-button (click)="onCancel()">Cancelar</button>
+  </mat-card-actions>
+</mat-card>

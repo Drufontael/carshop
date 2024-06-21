@@ -1,0 +1,89 @@
+<mat-card>
+  <mat-card-header>
+    <mat-toolbar color="primary">
+      <span>Informações do Veículo</span>
+    </mat-toolbar>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="form" class="min-width">
+
+      <mat-form-field class="full-width">
+        <mat-label>Marca</mat-label>
+        <input matInput formControlName="brand">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Modelo</mat-label>
+        <input matInput formControlName="modelCar">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Ano de fabricação</mat-label>
+        <input matInput type="number" formControlName="year">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Ano do modelo</mat-label>
+        <input matInput type="number" formControlName="modelYear">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Km</mat-label>
+        <input matInput type="number" formControlName="km">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Placa</mat-label>
+        <input matInput formControlName="plate">
+        @if (form.get('plate')?.invalid){
+        <mat-error>{{getErrorMessage('plate')}}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Chassis</mat-label>
+        <input matInput formControlName="chassis">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Renavan</mat-label>
+        <input matInput formControlName="renavan">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Proprietario</mat-label>
+        <input matInput formControlName="ownerName">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>CPF/CNPJ</mat-label>
+        <input matInput formControlName="ownerIdentity">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Preço</mat-label>
+        <input matInput type="number" formControlName="price">
+        <span matTextPrefix>R$&nbsp;</span>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Documento de rodar</mat-label>
+        <input matInput type="number" formControlName="yearDocument">
+      </mat-form-field>
+
+      <div class="check-box-container">
+
+        <mat-checkbox formControlName="manual" class="check-box-space">Manual</mat-checkbox>
+        <mat-checkbox formControlName="extraKey" class="check-box-space">Chave reserva</mat-checkbox>
+        <mat-checkbox formControlName="tools" class="check-box-space">Macaco/Chave de roda</mat-checkbox>
+        <mat-checkbox formControlName="dut" class="check-box-space">DUT</mat-checkbox>
+
+      </div>
+
+    </form>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+    <button mat-raised-button (click)="onCancel()">Cancelar</button>
+  </mat-card-actions>
+</mat-card>

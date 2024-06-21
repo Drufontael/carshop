@@ -1,0 +1,29 @@
+export interface Vehicles {
+  brand:string;
+  modelCar:string;
+  year:undefined;
+  modelYear:undefined;
+  km:undefined;
+  plate:string;
+  chassis:string;
+  renavan:string;
+  ownerName:string;
+  ownerIdentity:string;
+  price:undefined;
+  manual:boolean;
+  extraKey:boolean;
+  tools:boolean;
+  dut:boolean;
+  yearDocument:undefined;
+  _links:{
+    expenses:{
+      href:string
+    },
+    images:{
+      href:string
+    }
+    vehicleList:{
+      href:string
+    }
+  }
+}

@@ -1,0 +1,47 @@
+<mat-table [dataSource]="consignments" class="mat-elevation-z8">
+
+
+  <ng-container matColumnDef="consignor">
+    <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.consignor}} </mat-cell>
+  </ng-container>
+
+
+
+  <ng-container matColumnDef="vehicle">
+    <mat-header-cell *matHeaderCellDef> Veículo </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.vehicle}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="vehiclePlate">
+    <mat-header-cell *matHeaderCellDef> Placa </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.vehiclePlate}} </mat-cell>
+  </ng-container>
+
+
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef>
+      <button mat-mini-fab color="accent" aria-label="Adiciona uma consignação"  (click)="onAdd()" matTooltip="Adicionar consignação">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button mat-icon-button color="primary" aria-label="Editar consignação" (click)="onEdit(element.id)" matTooltip="Editar consignação">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="accent" aria-label="Gerar contrato" (click)="onDownload(element.id)" matTooltip="Gerar contrato">
+        <mat-icon>download</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" aria-label="Deletar consignação" (click)="onDelete(element.id)" matTooltip="Remover consignação">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+
+
+  <mat-header-row *matHeaderRowDef="displayedColumns,sticky: true"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
