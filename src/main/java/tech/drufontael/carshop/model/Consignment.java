@@ -27,4 +27,11 @@ public class Consignment{
     private LocalDate date;
     private LocalTime entryTime;
     private boolean opened;
+
+    @Transient
+    private String formattedDate;
+
+
+    public Consignment(UUID id, Object o, Object o1, String location, LocalDate date, LocalTime entryTime, boolean opened) {
+    }
 }

@@ -1,9 +1,6 @@
 package tech.drufontael.carshop.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +17,7 @@ public class Consignor{
     private UUID id;
     private String name;
     private String address;
+    @Column(unique = true)
     private String register;
     private String identity;
     private String phone;

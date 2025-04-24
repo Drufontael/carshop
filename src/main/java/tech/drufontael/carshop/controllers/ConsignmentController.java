@@ -73,7 +73,7 @@ public class ConsignmentController implements ConsignmentDoc {
 
     @GetMapping("/pdfContract/{id}")
     public ResponseEntity<ByteArrayResource> downloadPDF(@PathVariable UUID id) {
-         byte[] pdfContent = service.createPdfContract(id,"D:\\Geral");
+         byte[] pdfContent = service.createPdfContract(id);
 
 
         HttpHeaders headers = new HttpHeaders();

@@ -46,4 +46,10 @@ public class Vehicle{
         if(expenses.isEmpty()) return 0.0;
         return expenses.stream().mapToDouble(Expense::getValor).sum();
     }
+
+    @Transient
+    private String formattedPrice;
+
+    @Transient
+    private String priceInWords;
 }

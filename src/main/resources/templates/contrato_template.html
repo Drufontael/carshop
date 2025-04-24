@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Contrato de Consignação</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 1rem;
+      }
+      .container {
+        width: 95%;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      header > p {
+        margin-block: 3rem;
+        margin-left: 10rem;
+      }
+      section {
+        margin-left: 1rem;
+        margin-bottom: 2rem;
+      }
+      .clausula {
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+      .clausulas p {
+        text-align: justify;
+        word-wrap: break-word; /* Adicionando quebra de palavras */
+      }
+      .linha {
+        display: block; /* Mudando para block para que cada span ocupe sua linha inicialmente */
+        margin-bottom: 1rem;
+      }
+
+      .linha > span {
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h2 style="text-align: center">CONTRATO DE CONSIGNAÇÃO DE VEICULO</h2>
+        <p>
+          Nos expressos termos deste documento e na forma e na melhor forma de
+          direito as partes abaixo qualificadas têm entre si certo e ajustado
+          este contrato de intermediação para venda de veículo automotor em
+          consignação como se segue:
+        </p>
+      </header>
+
+      <section>
+        <h3>CONSIGNANTE</h3>
+        <p>
+          Nome/Razão Social:
+          <span th:text="${consignment.consignor.name}"
+            >NOME DO CONSIGNANTE</span
+          >
+        </p>
+        <p>
+          Endereço:
+          <span th:text="${consignment.consignor.address}"
+            >ENDEREÇO DO CONSIGNANTE</span
+          >
+        </p>
+        <p>
+          CPF/CNPJ:
+          <span th:text="${consignment.consignor.register}"
+            >CPF/CNPJ DO CONSIGNANTE</span
+          ><span style="margin-left: 2rem;">RG:
+          <span th:text="${consignment.consignor.identity}"
+            >RG DO CONSIGNANTE</span
+          ></span> 
+        </p>
+        <p>
+          Telefone:
+          <span th:text="${consignment.consignor.phone}"
+            >TELEFONE DO CONSIGNANTE</span
+          >
+        </p>
+      </section>
+
+      <section>
+        <h3>CONSIGNADA</h3>
+        <p>Nome/Razão Social: MM MOTORS</p>
+        <p>
+          Endereço: AV. Mutirão QD.78 LT.23E N 2496, Setor Bueno GOIÂNIA-GOIÁS
+        </p>
+        <p>CNPJ: 43.711.907/0001-71</p>
+        <p>Telefone: (62)3251-6008</p>
+      </section>
+      <div class="clausulas">
+        <p>
+          <span class="clausula">I – OBJETO:</span> Através deste instrumento e
+          nestas condições o CONSIGNANTE coloca a disposição da CONSIGINADA um
+          veículo automotor conforme especificações abaixo para que este
+          intermedie a venda para terceiros mediante o pagamento de comissão:
+        </p>
+
+        <section>
+          <p style="font-style: italic">ESPECIFICAÇÃO DO VEÍCULO:</p>
+          <div class="linha">
+            <span style="width: 20%;">
+              Marca:
+              <span th:text="${consignment.vehicle.brand}"
+                >MARCA DO VEÍCULO</span
+              >
+            </span>
+            <span style="width: 44%;">
+              Modelo:
+              <span th:text="${consignment.vehicle.modelCar}"
+                >MODELO DO VEÍCULO</span
+              >
+            </span>
+            <span style="width: 32%;">
+              Ano/Mod:
+              <span th:text="${consignment.vehicle.year}">ANO</span>/<span
+                th:text="${consignment.vehicle.modelYear}"
+                >MODELO</span
+              >
+            </span>
+          </div>
+          <div class="linha">
+            <span style="width: 20%;">
+              KM:
+              <span th:text="${consignment.vehicle.km}">KM DO VEÍCULO</span>
+            </span>
+            <span style="width: 44%;">
+              Placa:
+              <span th:text="${consignment.vehicle.plate}"
+                >PLACA DO VEÍCULO</span
+              >
+            </span>
+            <span style="width: 32%;">
+              Chassi:
+              <span th:text="${consignment.vehicle.chassis}"
+                >CHASSI DO VEÍCULO</span
+              >
+            </span>
+          </div>
+          <p>
+            Renavam:
+            <span th:text="${consignment.vehicle.renavan}"
+              >RENAVAM DO VEÍCULO</span
+            >
+          </p>
+          <p>
+            Nome do Proprietario:
+            <span th:text="${consignment.vehicle.ownerName}"
+              >NOME DO PROPRIETÁRIO</span
+            >
+          </p>
+          <p>
+            CPF/CNPJ:
+            <span th:text="${consignment.vehicle.ownerIdentity}"
+              >CPF/CNPJ DO PROPRIETÁRIO</span
+            >
+          </p>
+        </section>
+        <p>Entregue a CONSIGNADA, com o seguinte estado de conservação:</p>
+
+        <p>
+          <span class="clausula">II - PREÇO:</span> o preço mínimo estabelecido
+          para esta venda e, desde já autorizado pelo CONSIGNANTE é de: R$
+          <span th:text="${consignment.vehicle.price}">PREÇO DO VEÍCULO</span>
+          (<span th:text="${consignment.vehicle.priceInWords}"
+            >PREÇO POR EXTENSO</span
+          >)
+        </p>
+
+        <p>
+          <span class="clausula">III - PRAZO:</span> O prazo de vigência deste
+          contrato, que poderá ser renovado por acordo expresso entre as partes
+          é de 30 DIAS.
+        </p>
+
+        <p>
+          <span class="clausula">IV - COMISSÃO:</span> Fica autorizada a
+          CONSIGNADA a deduzir do preço de venda efetivamente realizada como
+          pagamento se sua comissão em razão desta intermediação a quantia
+          equivalente a 4%.
+        </p>
+
+        <p>
+          <span class="clausula">V - RESPONSABILIDADES:</span> O CONSIGNANTE se
+          responsabiliza perante a CONSIGNADA, assim como junto ao TERCEIRO
+          COMPRADOR por eventuais multas ou taxas que pesem sobre o veículo
+          objeto deste contrato, bem como, por toda sua documentação e o estado
+          do mesmo conforme especificado acima. Fica o CONSIGNANTE responsável
+          pelas despesas com o veículo, tais como lavagem, polimento, multas e
+          taxas de baixa de alienação, até a presente data.
+        </p>
+        <p>
+          O CONSIGNANTE confere a CONSIGNADA amplos, gerais e ilimitados poderes
+          para junto aos clientes interessados, poder receber quantias, dar
+          recibo e quitação, praticando enfim todos os atos necessários ao
+          comprimento do presente contrato.
+        </p>
+        <p>
+          Por sua vez responsabiliza-se a CONSIGNADA pela guarda do veículo em
+          questão enquanto estiver sob a sua posse.
+        </p>
+
+        <p>
+          <span class="clausula">VI - MULTA:</span> A parte que deixar de
+          cumprir com alguma destas condições para com o inocente, pagará uma
+          multa equivalente a 5% do valor mencionado na cláusula II.
+        </p>
+
+        <p>
+          <span class="clausula">VII - SUCESSÃO:</span> O presente contrato
+          passa a valer a partir da assinatura pelas partes, obrigando-se a ele
+          os herdeiros ou sucessores das mesmas.
+        </p>
+
+        <p>
+          <span class="clausula">VIII - FORO:</span> os contratantes elegem o
+          foro e comarca de Goiânia-go para dirimir eventuais dúvidas advindas
+          deste instrumento com renuncia a qualquer outro por mais privilegiado
+          que seja. E por estarem assim certos e ajustados firmam o presente
+          celebrado em duas vias de igual teor, perante as testemunhas
+          presentes.
+        </p>
+      </div>
+      <p>Observação:</p>
+      <section>
+
+          <p>VEÍCULO ENTREGUE COM:</p>
+          <p>
+            (
+            <span
+              class="checkbox"
+              th:text="${consignment.vehicle.manual ? 'X' : ' '}"
+            ></span
+            >)Manual - (
+            <span
+              class="checkbox"
+              th:text="${consignment.vehicle.extraKey ? 'X' : ' '}"
+            ></span
+            >)Chave Reserva - (<span
+              th:text="${consignment.vehicle.tools ? 'X' : ' '}"
+            ></span>
+            )Macaco/Chave de Roda/Estepe - (
+            <span
+              class="checkbox"
+              th:text="${consignment.vehicle.dut ? 'X' : ' '}"
+            ></span
+            >)DUT
+          </p>
+          <p>
+            Documento de rodar:
+            <span th:text="${consignment.vehicle.yearDocument}"
+              >ANO DO DOCUMENTO</span
+            >
+      </section>
+        Hora de entrada:
+        <span th:text="${consignment.entryTime}">HORA DE ENTRADA</span>
+      </p>
+      <p>
+        Local e Data: <span th:text="${consignment.location}">LOCAL</span>,
+        <span th:text="${consignment.formattedDate}">DATA</span>
+      </p>
+      <br />
+      <div style="display: block;">
+        <span style="display: inline-block;width: 40%;">_______________________</span>
+        <span style="display: inline-block;width: 40%;">_______________________</span>        
+      </div>
+      <div>
+        <span style="display: inline-block;width: 40%;">CONSIGNANTE</span>
+        <span style="display: inline-block;width: 40%;">CONSIGNADA</span>        
+      </div>
+ 
+    </div>
+  </body>
+</html>

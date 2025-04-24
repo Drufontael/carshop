@@ -37,4 +37,41 @@ public class Utils {
         }
         return plate;
     }
+
+    public static String registerValidation(String register){
+        StringBuffer registerNumber=new StringBuffer();
+        for(char c:register.toCharArray()){
+            if(Character.isDigit(c)){
+                registerNumber.append(c);
+            }
+        }
+        return registerNumber.toString();
+    }
+
+    public static String registerFormat(String registerSource){
+        String register= registerValidation(registerSource);
+
+        StringBuffer returnRegister = new StringBuffer();
+        if(register.length()==11){
+            returnRegister.append(register, 0, 3);
+            returnRegister.append(".");
+            returnRegister.append(register, 3, 6);
+            returnRegister.append(".");
+            returnRegister.append(register, 6, 9);
+            returnRegister.append("-");
+            returnRegister.append(register.substring(9));
+        } else if (register.length()==14) {
+            returnRegister.append(register, 0, 2);
+            returnRegister.append(".");
+            returnRegister.append(register, 2, 5);
+            returnRegister.append(".");
+            returnRegister.append(register, 5, 8);
+            returnRegister.append("/");
+            returnRegister.append(register, 8, 12);
+            returnRegister.append("-");
+            returnRegister.append(register.substring(12));
+        }
+        if (returnRegister.toString().isEmpty()) return register;
+        return returnRegister.toString();
+    }
 }
