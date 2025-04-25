@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.hateoas.RepresentationModel;
 import tech.drufontael.carshop.model.Consignor;
+import tech.drufontael.carshop.model.Register;
 import tech.drufontael.carshop.utils.Utils;
 
 import java.util.UUID;
@@ -25,13 +26,13 @@ public class ConsignorDto  extends RepresentationModel<ConsignorDto> {
         this.id=consignor.getId();
         this.name=consignor.getName();
         this.address=consignor.getAddress();
-        this.register=Utils.registerFormat(consignor.getRegister());
+        this.register=consignor.getRegister().toString();
         this.identity=consignor.getIdentity();
         this.phone=consignor.getPhone();
     }
 
     public Consignor toConsignor(){
         String register= Utils.registerFormat(this.getRegister());
-        return new Consignor(getId(),getName(),getAddress(),register,getIdentity(),getPhone());
+        return new Consignor(getId(),getName(),getAddress(),new Register(getRegister()),getIdentity(),getPhone());
     }
 }

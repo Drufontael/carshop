@@ -2,8 +2,9 @@ services:
   postgres:
     image: 'postgres:latest'
     environment:
-      - 'POSTGRES_DB=mmmotors'
+      - 'POSTGRES_DB=mmmotors_experiment'
       - 'POSTGRES_PASSWORD=1234567'
       - 'POSTGRES_USER=user'
     ports:
       - '5432:5432'
+

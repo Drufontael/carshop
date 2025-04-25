@@ -28,7 +28,7 @@ public class PdfboxAdapter implements PdfContractAdapter {
             field = pDAcroForm.getField("endereco");
             field.setValue(consignment.getConsignor().getAddress());
             field = pDAcroForm.getField("cpfCnpj");
-            field.setValue(Utils.registerFormat(consignment.getConsignor().getRegister()));
+            field.setValue(Utils.registerFormat(consignment.getConsignor().getRegister().toString()));
             field = pDAcroForm.getField("rg");
             field.setValue(consignment.getConsignor().getIdentity());
             field = pDAcroForm.getField("telefone");

@@ -1,0 +1,22 @@
+# application.yml
+spring:
+  application:
+    name: carshop
+  profiles:
+    active: experiment
+
+---
+
+
+---
+#experiment
+spring:
+  config:
+    activate:
+      on-profile: experiment
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+

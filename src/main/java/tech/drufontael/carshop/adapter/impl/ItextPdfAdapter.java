@@ -19,8 +19,6 @@ import java.util.Locale;
 public class ItextPdfAdapter implements PdfContractAdapter {
     @Override
     public byte[] documentCreator(Consignment consignment) {
-        String formattedRegister=Utils.registerFormat(consignment.getConsignor().getRegister());
-        consignment.getConsignor().setRegister(formattedRegister);
         try {
             // Configurar o Thymeleaf
             ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();

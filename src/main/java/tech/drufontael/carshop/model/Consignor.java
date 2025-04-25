@@ -17,8 +17,8 @@ public class Consignor{
     private UUID id;
     private String name;
     private String address;
-    @Column(unique = true)
-    private String register;
+   @Column(unique = true)
+    private Register register;
     private String identity;
     private String phone;
 
