@@ -3,7 +3,7 @@ package tech.drufontael.carshop.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tech.drufontael.carshop.dto.ConsignorDto;
-import tech.drufontael.carshop.exceptions.ResourseNotFoundException;
+import tech.drufontael.carshop.exceptions.ResourceNotFoundException;
 import tech.drufontael.carshop.model.Consignor;
 import tech.drufontael.carshop.repositories.ConsignorRepository;
 import tech.drufontael.carshop.utils.Utils;
@@ -25,17 +25,17 @@ public class ConsignorService {
 
     public ConsignorDto read(UUID id){
         return new ConsignorDto(repository.findById(id)
-                .orElseThrow(()->new ResourseNotFoundException("Consignor not found")));
+                .orElseThrow(()->new ResourceNotFoundException("Consignor not found")));
     }
 
     public ConsignorDto update(UUID id,Object source){
-        var target=repository.findById(id).orElseThrow(()->new ResourseNotFoundException("Consignor not found."));
+        var target=repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Consignor not found."));
         Utils.copyNonNullProperties(source,target);
         return new ConsignorDto(repository.save(target));
     }
 
     public void delete(UUID id){
-        var consignor=repository.findById(id).orElseThrow(()->new ResourseNotFoundException("Consignor not found"));
+        var consignor=repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Consignor not found"));
         repository.delete(consignor);
     }
 

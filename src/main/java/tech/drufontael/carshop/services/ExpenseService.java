@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tech.drufontael.carshop.dto.ExpenseDto;
-import tech.drufontael.carshop.exceptions.ResourseNotFoundException;
+import tech.drufontael.carshop.exceptions.ResourceNotFoundException;
 import tech.drufontael.carshop.model.Expense;
 
 import tech.drufontael.carshop.repositories.ExpenseRepository;
@@ -34,17 +34,17 @@ public class ExpenseService {
 
     public ExpenseDto read(UUID id){
         return new ExpenseDto(repository.findById(id)
-                .orElseThrow(()->new ResourseNotFoundException("Spent not found")));
+                .orElseThrow(()->new ResourceNotFoundException("Spent not found")));
     }
 
     public Expense update(UUID id, Object source){
-        Expense target=repository.findById(id).orElseThrow(()->new ResourseNotFoundException("Spent not found."));
+        Expense target=repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Spent not found."));
         Utils.copyNonNullProperties(source,target);
         return repository.save(target);
     }
 
     public void delete(UUID id){
-        Expense expense =repository.findById(id).orElseThrow(()->new ResourseNotFoundException("Spent not found"));
+        Expense expense =repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Spent not found"));
         repository.delete(expense);
     }
 

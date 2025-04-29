@@ -1,22 +1,15 @@
 package tech.drufontael.carshop.services;
 
-import org.apache.pdfbox.Loader;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
-import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tech.drufontael.carshop.adapter.PdfContractAdapter;
 import tech.drufontael.carshop.dto.ConsignmentDto;
-import tech.drufontael.carshop.exceptions.ResourseNotFoundException;
+import tech.drufontael.carshop.exceptions.ResourceNotFoundException;
 import tech.drufontael.carshop.model.Consignment;
 import tech.drufontael.carshop.repositories.ConsignmentRepository;
 import tech.drufontael.carshop.utils.PorExtenso;
 import tech.drufontael.carshop.utils.Utils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -50,11 +43,11 @@ public class ConsignmentService {
 
     public ConsignmentDto read(UUID id){
         return new ConsignmentDto(repository.findById(id)
-                .orElseThrow(()->new ResourseNotFoundException("Consignment not found")));
+                .orElseThrow(()->new ResourceNotFoundException("Consignment not found")));
     }
 
     public ConsignmentDto update(UUID id, ConsignmentDto source){
-        var target=repository.findById(id).orElseThrow(()->new ResourseNotFoundException("Consignment not found."));
+        var target=repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Consignment not found."));
         Utils.copyNonNullProperties(source,target);
         if(source.getConsignorId()!=null) target.setConsignor(consignorService.read(source.getConsignorId())
                 .toConsignor());
@@ -64,7 +57,7 @@ public class ConsignmentService {
     }
 
     public void delete(UUID id){
-        Consignment consignment=repository.findById(id).orElseThrow(()->new ResourseNotFoundException("Consignment not found"));
+        Consignment consignment=repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Consignment not found"));
         repository.delete(consignment);
     }
 
@@ -82,7 +75,7 @@ public class ConsignmentService {
     }
 
     public byte[] createPdfContract(UUID id){
-        var consignment=repository.findById(id).orElseThrow(()->new ResourseNotFoundException("Consignment not found"));
+        var consignment=repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Consignment not found"));
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         consignment.getVehicle().setPriceInWords(PorExtenso.converter(consignment.getVehicle().getPrice()));
