@@ -1,7 +1,10 @@
 package tech.drufontael.carshop.modules.customer.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import tech.drufontael.carshop.modules.customer.domain.enums.CustomerType;
 import tech.drufontael.carshop.modules.shared.Address;
 import tech.drufontael.carshop.modules.shared.Contact;
@@ -11,6 +14,9 @@ import java.util.List;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Customer {
 
     @Id
