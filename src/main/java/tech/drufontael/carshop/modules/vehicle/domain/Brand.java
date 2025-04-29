@@ -1,4 +1,4 @@
-package tech.drufontael.carshop.modules.veiculos.domain;
+package tech.drufontael.carshop.modules.vehicle.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,16 +9,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Marca {
+public class Brand {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true, length = 50)  // Garante que o nome seja único
-    private String marca;
+    private String name;
 
-    public Marca(String marca){
-        this.marca=marca;
+    public Brand(String name){
+        this.name = name;
     }
 }

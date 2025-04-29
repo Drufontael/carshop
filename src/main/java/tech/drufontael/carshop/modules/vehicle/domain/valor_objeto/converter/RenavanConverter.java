@@ -1,8 +1,8 @@
-package tech.drufontael.carshop.modules.veiculos.domain.valor_objeto.converter;
+package tech.drufontael.carshop.modules.vehicle.domain.valor_objeto.converter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import tech.drufontael.carshop.modules.veiculos.domain.valor_objeto.Renavan;
+import tech.drufontael.carshop.modules.vehicle.domain.valor_objeto.Renavan;
 
 @Converter(autoApply = true)
 public class RenavanConverter implements AttributeConverter<Renavan,String> {

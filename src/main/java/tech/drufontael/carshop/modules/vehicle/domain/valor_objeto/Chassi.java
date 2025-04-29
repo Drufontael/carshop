@@ -1,4 +1,6 @@
-package tech.drufontael.carshop.modules.veiculos.domain.valor_objeto;
+package tech.drufontael.carshop.modules.vehicle.domain.valor_objeto;
+
+import tech.drufontael.carshop.exceptions.InvalidArgumentFormatException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,7 +63,7 @@ public class Chassi {
     }
     private static void validarChassi(String chassi) {
         if (chassi == null || chassi.length() != TAMANHO_CHASSI) {
-            throw new RuntimeException("Tamanho do chassi invalido: "+chassi.length());
+            throw new InvalidArgumentFormatException("Tamanho do chassi invalido: "+chassi.length());
         }
 
         chassi = chassi.toUpperCase();
@@ -76,7 +78,7 @@ public class Chassi {
             valor=Character.isDigit(c)?Character.getNumericValue(c):10;
             valor= VALORES_LETRAS.getOrDefault(c, valor);
             if (valor==10) {
-                throw new RuntimeException("Chassi inconsistente: "+chassi);
+                throw new InvalidArgumentFormatException("Chassi inconsistente: "+chassi);
             }
 
 
@@ -89,7 +91,7 @@ public class Chassi {
         // Verifica o dígito verificador
         boolean condicao1=(resto==10)&&(digitoVerificador=='X');
         boolean condicao2= Character.isDigit(digitoVerificador) && Character.getNumericValue(digitoVerificador) == resto;
-        if(!condicao1 && !condicao2) throw new RuntimeException("Chassi inconsistente: "+chassi);
+        if(!condicao1 && !condicao2) throw new InvalidArgumentFormatException("Chassi inconsistente: "+chassi);
 
     }
 

@@ -1,4 +1,6 @@
-package tech.drufontael.carshop.modules.veiculos.domain.valor_objeto;
+package tech.drufontael.carshop.modules.vehicle.domain.valor_objeto;
+
+import tech.drufontael.carshop.exceptions.InvalidArgumentFormatException;
 
 public class Renavan {
 
@@ -14,7 +16,7 @@ public class Renavan {
         renavam = renavam.replaceAll("[^0-9]", "");
 
         if (renavam.length() != 9 && renavam.length() != 11) {
-            throw new RuntimeException("Renavan invalido: "+renavam);
+            throw new InvalidArgumentFormatException("Renavan invalido: "+renavam);
         }
         if (renavam.length() == 9) {
             renavam = "00" + renavam;
@@ -29,7 +31,7 @@ public class Renavan {
         int resto = soma % 11;
         int digitoCalculado = (resto == 0 || resto == 1) ? 0 : (11 - resto);
 
-        if( digitoVerificador != digitoCalculado) throw new RuntimeException("Renavan invalido: "+renavam);
+        if( digitoVerificador != digitoCalculado) throw new InvalidArgumentFormatException("Renavan invalido: "+renavam);
     }
 
     public String getvalue(){
