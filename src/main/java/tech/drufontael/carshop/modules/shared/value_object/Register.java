@@ -1,4 +1,4 @@
-package tech.drufontael.carshop.modules.customer.domain.value_object;
+package tech.drufontael.carshop.modules.shared.value_object;
 
 import lombok.Getter;
 import tech.drufontael.carshop.exceptions.InvalidArgumentFormatException;

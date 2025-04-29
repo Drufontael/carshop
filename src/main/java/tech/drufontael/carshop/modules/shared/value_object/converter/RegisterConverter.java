@@ -1,8 +1,8 @@
-package tech.drufontael.carshop.modules.customer.domain.value_object.converter;
+package tech.drufontael.carshop.modules.shared.value_object.converter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import tech.drufontael.carshop.modules.customer.domain.value_object.Register;
+import tech.drufontael.carshop.modules.shared.value_object.Register;
 
 @Converter(autoApply = true)
 public class RegisterConverter implements AttributeConverter<Register,String> {
