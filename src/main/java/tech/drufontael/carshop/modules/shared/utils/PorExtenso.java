@@ -1,4 +1,4 @@
-package tech.drufontael.carshop.utils;
+package tech.drufontael.carshop.modules.shared.utils;
 
 import br.com.caelum.stella.inwords.FormatoDeReal;
 import br.com.caelum.stella.inwords.NumericToWordsConverter;

@@ -8,11 +8,13 @@ import tech.drufontael.carshop.modules.shared.value_object.Telephone;
 public class TelephoneConverter implements AttributeConverter<Telephone,String> {
     @Override
     public String convertToDatabaseColumn(Telephone telephone) {
+        if (telephone==null) return "--";
         return telephone.getValue();
     }
 
     @Override
     public Telephone convertToEntityAttribute(String telephone) {
+        if (telephone.equalsIgnoreCase("--")) return null;
         return new Telephone(telephone);
     }
 }

@@ -1,4 +1,4 @@
-package tech.drufontael.carshop.adapter.impl;
+package tech.drufontael.carshop.modules.consignment.infrastructure.adapter.impl;
 
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
@@ -8,9 +8,10 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import tech.drufontael.carshop.adapter.PdfContractAdapter;
-import tech.drufontael.carshop.model.Consignment;
-import tech.drufontael.carshop.utils.Utils;
+import tech.drufontael.carshop.modules.consignment.domain.Consignment;
+import tech.drufontael.carshop.modules.consignment.infrastructure.adapter.ConsignmentTemplateDto;
+import tech.drufontael.carshop.modules.consignment.infrastructure.adapter.PdfContractAdapter;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.StringWriter;
@@ -19,6 +20,7 @@ import java.util.Locale;
 public class ItextPdfAdapter implements PdfContractAdapter {
     @Override
     public byte[] documentCreator(Consignment consignment) {
+        ConsignmentTemplateDto template=ConsignmentTemplateDto.dtoFactory(consignment);
         try {
             // Configurar o Thymeleaf
             ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
@@ -32,7 +34,7 @@ public class ItextPdfAdapter implements PdfContractAdapter {
 
             // Criar o contexto do Thymeleaf com os dados
             Context context = new Context(Locale.getDefault());
-            context.setVariable("consignment", consignment);
+            context.setVariable("consignment", template);
 
             // Processar o template HTML
             StringWriter writer = new StringWriter();

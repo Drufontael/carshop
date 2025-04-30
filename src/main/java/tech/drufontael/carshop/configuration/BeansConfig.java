@@ -4,9 +4,8 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tech.drufontael.carshop.adapter.PdfContractAdapter;
-import tech.drufontael.carshop.adapter.impl.ItextPdfAdapter;
-import tech.drufontael.carshop.adapter.impl.PdfboxAdapter;
+import tech.drufontael.carshop.modules.consignment.infrastructure.adapter.PdfContractAdapter;
+import tech.drufontael.carshop.modules.consignment.infrastructure.adapter.impl.ItextPdfAdapter;
 
 @Configuration
 public class BeansConfig {

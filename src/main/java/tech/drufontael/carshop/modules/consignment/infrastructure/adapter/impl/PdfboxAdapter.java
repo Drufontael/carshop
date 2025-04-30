@@ -1,13 +1,12 @@
-package tech.drufontael.carshop.adapter.impl;
+package tech.drufontael.carshop.modules.consignment.infrastructure.adapter.impl;
 
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
-import tech.drufontael.carshop.adapter.PdfContractAdapter;
-import tech.drufontael.carshop.model.Consignment;
-import tech.drufontael.carshop.utils.PorExtenso;
-import tech.drufontael.carshop.utils.Utils;
+import tech.drufontael.carshop.modules.consignment.domain.Consignment;
+import tech.drufontael.carshop.modules.consignment.infrastructure.adapter.ConsignmentTemplateDto;
+import tech.drufontael.carshop.modules.consignment.infrastructure.adapter.PdfContractAdapter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -19,61 +18,61 @@ public class PdfboxAdapter implements PdfContractAdapter {
 
     @Override
     public byte[] documentCreator(Consignment consignment) {
+        ConsignmentTemplateDto templateDto=ConsignmentTemplateDto.dtoFactory(consignment);
         try {
             File file=new File("src/main/resources/static/CONTRATO.pdf");
             PDDocument pDDocument = Loader.loadPDF(file);
             PDAcroForm pDAcroForm = pDDocument.getDocumentCatalog().getAcroForm();
             PDField field = pDAcroForm.getField("nomeConsignante");
-            field.setValue(consignment.getConsignor().getName());
+            field.setValue(templateDto.getConsignorName());
             field = pDAcroForm.getField("endereco");
-            field.setValue(consignment.getConsignor().getAddress());
+            field.setValue(templateDto.getConsignorAddress());
             field = pDAcroForm.getField("cpfCnpj");
-            field.setValue(Utils.registerFormat(consignment.getConsignor().getRegister().toString()));
+            field.setValue(templateDto.getConsignorRegister());
             field = pDAcroForm.getField("rg");
-            field.setValue(consignment.getConsignor().getIdentity());
+            field.setValue(templateDto.getConsignorIdentity());
             field = pDAcroForm.getField("telefone");
-            field.setValue(consignment.getConsignor().getPhone());
+            field.setValue(templateDto.getConsignorPhone());
             field = pDAcroForm.getField("marca");
-            field.setValue(consignment.getVehicle().getBrand());
+            field.setValue(templateDto.getVehicleBrand());
             field = pDAcroForm.getField("modelo");
-            field.setValue(consignment.getVehicle().getModelCar());
+            field.setValue(templateDto.getVehicleModel());
             field = pDAcroForm.getField("anoMod");
-            field.setValue(consignment.getVehicle().getYear()+"/"
-                    +consignment.getVehicle().getModelYear());
+            field.setValue(templateDto.getVehicleYears());
             field = pDAcroForm.getField("km");
-            field.setValue(""+consignment.getVehicle().getKm());
+            field.setValue(templateDto.getVehicleMileage());
             field = pDAcroForm.getField("placa");
-            field.setValue(consignment.getVehicle().getPlate());
+            field.setValue(templateDto.getVehiclePlate());
             field = pDAcroForm.getField("chassi");
-            field.setValue(consignment.getVehicle().getChassis());
+            field.setValue(templateDto.getVehicleChassi());
             field = pDAcroForm.getField("renavam");
-            field.setValue(consignment.getVehicle().getRenavan());
+            field.setValue(templateDto.getVehicleRenavam());
             field = pDAcroForm.getField("nomeProprietario");
-            field.setValue(consignment.getVehicle().getOwnerName());
+            field.setValue(templateDto.getVehicleOwner());
             field = pDAcroForm.getField("cpfCnpjProp");
-            field.setValue(consignment.getVehicle().getOwnerIdentity());
+            field.setValue(templateDto.getVehicleOwnerRegister());
             field = pDAcroForm.getField("preco");
-            field.setValue("R$ "+consignment.getVehicle().getPrice()+" ("+
-                    PorExtenso.converter(consignment.getVehicle().getPrice())+")");
+            field.setValue("R$ "+templateDto.getVehiclePrice()+" ("+
+                    templateDto.getVehiclePriceInWords()+")");
             field = pDAcroForm.getField("manual");
-            field.setValue(consignment.getVehicle().getManual()?"X":" ");
+            field.setValue(templateDto.isHasVehicleManual()?"X":" ");
             field = pDAcroForm.getField("chaveReserva");
-            field.setValue(consignment.getVehicle().getExtraKey()?"X":" ");
+            field.setValue(templateDto.isHasVehicleExtraKeys()?"X":" ");
             field = pDAcroForm.getField("ferramentas");
-            field.setValue(consignment.getVehicle().getTools()?"X":" ");
+            field.setValue(templateDto.isHasVehicleTools()?"X":" ");
             field = pDAcroForm.getField("dut");
-            field.setValue(consignment.getVehicle().getDut()?"X":" ");
+            field.setValue(templateDto.isHasVehicleDut()?"X":" ");
             field = pDAcroForm.getField("docRodar");
-            field.setValue(consignment.getVehicle().getYearDocument()+"");
+            field.setValue(templateDto.getVehicleDocumentYear());
             field = pDAcroForm.getField("horaEntrada");
-            field.setValue(consignment.getEntryTime().toString());
+            field.setValue(templateDto.getConsignmentEntryTime());
             field = pDAcroForm.getField("localData");
-            field.setValue(consignment.getLocation() +" "+ consignment.getFormattedDate());
+            field.setValue(templateDto.getConsignmentLocale() +" "+ templateDto.getConsignmentEntryDate());
 
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             pDDocument.save(baos);
-            pDDocument.save(PATH+"/CONTRATO"+consignment.getVehicle().getPlate()+".pdf");
+            pDDocument.save(PATH+"/CONTRATO"+templateDto.getVehiclePlate()+".pdf");
             pDDocument.close();
             return baos.toByteArray();
         }catch (IOException e){

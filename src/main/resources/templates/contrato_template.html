@@ -55,28 +55,28 @@
         <h3>CONSIGNANTE</h3>
         <p>
           Nome/Razão Social:
-          <span th:text="${consignment.consignor.name}"
+          <span th:text="${consignment.consignorName}"
             >NOME DO CONSIGNANTE</span
           >
         </p>
         <p>
           Endereço:
-          <span th:text="${consignment.consignor.address}"
+          <span th:text="${consignment.consignorAddress}"
             >ENDEREÇO DO CONSIGNANTE</span
           >
         </p>
         <p>
           CPF/CNPJ:
-          <span th:text="${consignment.consignor.register}"
+          <span th:text="${consignment.consignorRegister}"
             >CPF/CNPJ DO CONSIGNANTE</span
           ><span style="margin-left: 2rem;">RG:
-          <span th:text="${consignment.consignor.identity}"
+          <span th:text="${consignment.consignorIdentity}"
             >RG DO CONSIGNANTE</span
           ></span> 
         </p>
         <p>
           Telefone:
-          <span th:text="${consignment.consignor.phone}"
+          <span th:text="${consignment.consignorPhone}"
             >TELEFONE DO CONSIGNANTE</span
           >
         </p>
@@ -104,57 +104,54 @@
           <div class="linha">
             <span style="width: 20%;">
               Marca:
-              <span th:text="${consignment.vehicle.brand}"
+              <span th:text="${consignment.vehicleBrand}"
                 >MARCA DO VEÍCULO</span
               >
             </span>
             <span style="width: 44%;">
               Modelo:
-              <span th:text="${consignment.vehicle.modelCar}"
+              <span th:text="${consignment.vehicleModel}"
                 >MODELO DO VEÍCULO</span
               >
             </span>
             <span style="width: 32%;">
               Ano/Mod:
-              <span th:text="${consignment.vehicle.year}">ANO</span>/<span
-                th:text="${consignment.vehicle.modelYear}"
-                >MODELO</span
-              >
+              <span th:text="${consignment.vehicleYears}">ANO</span>
             </span>
           </div>
           <div class="linha">
             <span style="width: 20%;">
               KM:
-              <span th:text="${consignment.vehicle.km}">KM DO VEÍCULO</span>
+              <span th:text="${consignment.vehicleMileage}">KM DO VEÍCULO</span>
             </span>
             <span style="width: 44%;">
               Placa:
-              <span th:text="${consignment.vehicle.plate}"
+              <span th:text="${consignment.vehiclePlate}"
                 >PLACA DO VEÍCULO</span
               >
             </span>
             <span style="width: 32%;">
               Chassi:
-              <span th:text="${consignment.vehicle.chassis}"
+              <span th:text="${consignment.vehicleChassi}"
                 >CHASSI DO VEÍCULO</span
               >
             </span>
           </div>
           <p>
             Renavam:
-            <span th:text="${consignment.vehicle.renavan}"
+            <span th:text="${consignment.vehicleRenavam}"
               >RENAVAM DO VEÍCULO</span
             >
           </p>
           <p>
             Nome do Proprietario:
-            <span th:text="${consignment.vehicle.ownerName}"
+            <span th:text="${consignment.vehicleOwner}"
               >NOME DO PROPRIETÁRIO</span
             >
           </p>
           <p>
             CPF/CNPJ:
-            <span th:text="${consignment.vehicle.ownerIdentity}"
+            <span th:text="${consignment.vehicleOwnerRegister}"
               >CPF/CNPJ DO PROPRIETÁRIO</span
             >
           </p>
@@ -164,8 +161,8 @@
         <p>
           <span class="clausula">II - PREÇO:</span> o preço mínimo estabelecido
           para esta venda e, desde já autorizado pelo CONSIGNANTE é de: R$
-          <span th:text="${consignment.vehicle.price}">PREÇO DO VEÍCULO</span>
-          (<span th:text="${consignment.vehicle.priceInWords}"
+          <span th:text="${consignment.vehiclePrice}">PREÇO DO VEÍCULO</span>
+          (<span th:text="${consignment.vehiclePriceInWords}"
             >PREÇO POR EXTENSO</span
           >)
         </p>
@@ -232,35 +229,35 @@
             (
             <span
               class="checkbox"
-              th:text="${consignment.vehicle.manual ? 'X' : ' '}"
+              th:text="${consignment.hasVehicleManual ? 'X' : ' '}"
             ></span
             >)Manual - (
             <span
               class="checkbox"
-              th:text="${consignment.vehicle.extraKey ? 'X' : ' '}"
+              th:text="${consignment.hasVehicleExtraKey ? 'X' : ' '}"
             ></span
             >)Chave Reserva - (<span
-              th:text="${consignment.vehicle.tools ? 'X' : ' '}"
+              th:text="${consignment.hasVehicleTools ? 'X' : ' '}"
             ></span>
             )Macaco/Chave de Roda/Estepe - (
             <span
               class="checkbox"
-              th:text="${consignment.vehicle.dut ? 'X' : ' '}"
+              th:text="${consignment.hasVehicleDut ? 'X' : ' '}"
             ></span
             >)DUT
           </p>
           <p>
             Documento de rodar:
-            <span th:text="${consignment.vehicle.yearDocument}"
+            <span th:text="${consignment.vehicleDocumentYear}"
               >ANO DO DOCUMENTO</span
             >
       </section>
         Hora de entrada:
-        <span th:text="${consignment.entryTime}">HORA DE ENTRADA</span>
+        <span th:text="${consignment.consignmentEntryTime}">HORA DE ENTRADA</span>
       </p>
       <p>
-        Local e Data: <span th:text="${consignment.location}">LOCAL</span>,
-        <span th:text="${consignment.formattedDate}">DATA</span>
+        Local e Data: <span th:text="${consignment.consignmentLocale}">LOCAL</span>,
+        <span th:text="${consignment.consignmentEntryDate}">DATA</span>
       </p>
       <br />
       <div style="display: block;">

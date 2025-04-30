@@ -1,4 +1,4 @@
-package tech.drufontael.carshop.utils;
+package tech.drufontael.carshop.modules.shared.utils;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
