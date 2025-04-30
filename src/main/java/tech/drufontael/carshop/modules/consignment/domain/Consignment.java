@@ -1,7 +1,9 @@
 package tech.drufontael.carshop.modules.consignment.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import tech.drufontael.carshop.modules.customer.domain.Customer;
 import tech.drufontael.carshop.modules.shared.Address;
 import tech.drufontael.carshop.modules.vehicle.domain.Vehicle;
@@ -10,6 +12,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Consignment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
