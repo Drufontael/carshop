@@ -1,4 +1,4 @@
-package tech.drufontael.carshop.modules.vehicle.domain.valor_objeto;
+package tech.drufontael.carshop.modules.vehicle.domain.value_object;
 
 import tech.drufontael.carshop.exceptions.InvalidArgumentFormatException;
 

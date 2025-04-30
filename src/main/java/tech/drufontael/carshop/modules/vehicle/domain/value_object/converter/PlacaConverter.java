@@ -1,8 +1,8 @@
-package tech.drufontael.carshop.modules.vehicle.domain.valor_objeto.converter;
+package tech.drufontael.carshop.modules.vehicle.domain.value_object.converter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import tech.drufontael.carshop.modules.vehicle.domain.valor_objeto.Plate;
+import tech.drufontael.carshop.modules.vehicle.domain.value_object.Plate;
 
 @Converter(autoApply = true)
 public class PlacaConverter implements AttributeConverter<Plate,String> {

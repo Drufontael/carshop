@@ -2,7 +2,7 @@ package tech.drufontael.carshop.modules.vehicle.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import tech.drufontael.carshop.modules.vehicle.domain.valor_objeto.ModelYear;
+import tech.drufontael.carshop.modules.vehicle.domain.value_object.ModelYear;
 
 
 @NoArgsConstructor

@@ -1,8 +1,8 @@
-package tech.drufontael.carshop.modules.vehicle.domain.valor_objeto.converter;
+package tech.drufontael.carshop.modules.vehicle.domain.value_object.converter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import tech.drufontael.carshop.modules.vehicle.domain.valor_objeto.ModelYear;
+import tech.drufontael.carshop.modules.vehicle.domain.value_object.ModelYear;
 
 @Converter(autoApply = true)
 public class AnoModeloConverter implements AttributeConverter<ModelYear,Integer> {

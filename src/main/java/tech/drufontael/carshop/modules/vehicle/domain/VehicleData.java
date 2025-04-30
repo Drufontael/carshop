@@ -3,10 +3,11 @@ package tech.drufontael.carshop.modules.vehicle.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import tech.drufontael.carshop.exceptions.InvalidArgumentFormatException;
-import tech.drufontael.carshop.modules.vehicle.domain.valor_objeto.ManufactureYear;
-import tech.drufontael.carshop.modules.vehicle.domain.valor_objeto.Chassi;
-import tech.drufontael.carshop.modules.vehicle.domain.valor_objeto.Plate;
-import tech.drufontael.carshop.modules.vehicle.domain.valor_objeto.Renavan;
+import tech.drufontael.carshop.modules.vehicle.domain.enuns.Color;
+import tech.drufontael.carshop.modules.vehicle.domain.value_object.ManufactureYear;
+import tech.drufontael.carshop.modules.vehicle.domain.value_object.Chassi;
+import tech.drufontael.carshop.modules.vehicle.domain.value_object.Plate;
+import tech.drufontael.carshop.modules.vehicle.domain.value_object.Renavam;
 
 
 @NoArgsConstructor
@@ -24,8 +25,10 @@ public class VehicleData {
     @Column(length = 17)
     protected Chassi chassi;
     @Column(length = 11)
-    protected Renavan renavan;
+    protected Renavam renavam;
     protected ManufactureYear manufactureYear;
+    @Enumerated(value = EnumType.STRING)
+    protected Color color;
 
     private void validaAno(ManufactureYear manufactureYear, VehicleModel vehicleModel){
         if(manufactureYear.getValue()< vehicleModel.modelYear.getValue()-1){

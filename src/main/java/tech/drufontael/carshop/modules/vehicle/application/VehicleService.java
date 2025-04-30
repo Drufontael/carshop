@@ -10,7 +10,8 @@ import tech.drufontael.carshop.modules.vehicle.domain.Brand;
 import tech.drufontael.carshop.modules.vehicle.domain.Vehicle;
 import tech.drufontael.carshop.modules.vehicle.domain.VehicleData;
 import tech.drufontael.carshop.modules.vehicle.domain.VehicleModel;
-import tech.drufontael.carshop.modules.vehicle.domain.valor_objeto.*;
+import tech.drufontael.carshop.modules.vehicle.domain.enuns.Color;
+import tech.drufontael.carshop.modules.vehicle.domain.value_object.*;
 import tech.drufontael.carshop.modules.vehicle.infrastructure.BrandRepository;
 import tech.drufontael.carshop.modules.vehicle.infrastructure.VehicleManager;
 import tech.drufontael.carshop.modules.vehicle.infrastructure.VehicleModelRepository;
@@ -18,6 +19,7 @@ import tech.drufontael.carshop.modules.vehicle.infrastructure.VehicleRepository;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -30,45 +32,39 @@ public class VehicleService implements VehicleManager {
 
     @Override
     @Transactional
-    public Vehicle createVehicle(Long modelId, String plate, String chassi, String renavan, Integer manufactureYear) {
-        VehicleModel model = modelRepository.findById(modelId)
-                .orElseThrow(() -> new ResourceNotFoundException("Modelo não encontrado no id: " + modelId));
+    public Vehicle createVehicle(Long modelId, String plate, String chassi, String renavan, Integer manufactureYear, String color) {
+        VehicleModel model = getVehicleModelById(modelId);
 
         VehicleData data = VehicleData.builder()
                 .vehicleModel(model)
                 .chassi(new Chassi(chassi))
                 .plate(new Plate(plate))
-                .renavan(new Renavan(renavan))
+                .renavam(new Renavam(renavan))
                 .manufactureYear(new ManufactureYear(manufactureYear))
+                .color(Color.valueOf(color))
                 .build();
+
+        Customer owner=customerManager.getById(1L);
 
         Vehicle vehicle = new Vehicle();
         vehicle.setVehicleData(data);
+        vehicle.setOwner(owner);
+        vehicle.setPrice(BigDecimal.ZERO);
+        vehicle.setMileage(0);
         return vehicleRepository.save(vehicle);
     }
 
     @Override
-    public void addOwner(Long vehicleId, Long ownerId) {
-        Vehicle vehicle = getVehicleOrThrow(vehicleId);
+    public void addVariablesDatas(Long id, Long ownerId, BigDecimal price, Integer mileage) {
+        Vehicle vehicle=getVehicleOrThrow(id);
         Customer customer = customerManager.getById(ownerId);
         customerManager.addType(customer.getId(), "OWNER");
         vehicle.setOwner(customer);
-        vehicleRepository.save(vehicle);
-    }
-
-    @Override
-    public void addPrice(Long id, BigDecimal price) {
-        Vehicle vehicle = getVehicleOrThrow(id);
         vehicle.setPrice(price);
-        vehicleRepository.save(vehicle);
-    }
-
-    @Override
-    public void addMileage(Long id, Integer mileage) {
-        Vehicle vehicle = getVehicleOrThrow(id);
         vehicle.setMileage(mileage);
         vehicleRepository.save(vehicle);
     }
+
 
     @Override
     public void addAdditionalInformations(Long id, String[] informations) {
@@ -102,8 +98,7 @@ public class VehicleService implements VehicleManager {
 
     @Override
     public VehicleModel createVehicleModel(String model, Integer modelYear, Long brandId) {
-        Brand brand = brandRepository.findById(brandId)
-                .orElseThrow(() -> new ResourceNotFoundException("Marca não encontrada no id: " + brandId));
+        Brand brand = getBrandOrThrow(brandId);
 
         VehicleModel newModel = VehicleModel.builder()
                 .brand(brand)
@@ -115,13 +110,70 @@ public class VehicleService implements VehicleManager {
     }
 
     @Override
+    public VehicleModel getVehicleModelById(Long id) {
+        return getVehicleModelOrThrow(id);
+    }
+
+    @Override
+    public List<VehicleModel> getAllVehicleModels() {
+        return modelRepository.findAll();
+    }
+
+    @Override
+    public VehicleModel updateVehicleModel(Long id, VehicleModel model) {
+        VehicleModel modelToUpdate=getVehicleModelById(id);
+        modelToUpdate.setModelo(model.getModelo());
+        modelToUpdate.setModelYear(model.getModelYear());
+        modelToUpdate.setBrand(model.getBrand());
+        return modelRepository.save(modelToUpdate);
+    }
+
+    @Override
+    public void deleteVehicleModel(Long id) {
+        VehicleModel modelToDelete=getVehicleModelOrThrow(id);
+        modelRepository.delete(modelToDelete);
+    }
+
+    @Override
     public Brand createBrand(String brand) {
-        return brandRepository.findByName(brand).orElseGet(() -> brandRepository.save(new Brand(brand)));
+        String brandName=Brand.formatBrand(brand);
+        return brandRepository.findByName(brandName).orElseGet(() -> brandRepository.save(new Brand(brand)));
+    }
+
+    @Override
+    public Brand getBrandById(Long id) {
+        return getBrandOrThrow(id);
+    }
+
+    @Override
+    public List<Brand> getAllBrand() {
+        return brandRepository.findAll();
+    }
+
+    @Override
+    public Brand updateBrand(Long id, Brand brand) {
+        Brand brandToUpdade=getBrandOrThrow(id);
+        brandToUpdade.setName(brand.getName());
+        return brandRepository.save(brandToUpdade);
+    }
+
+    @Override
+    public void deleteBrandById(Long id) {
+        Brand brandToDelete=getBrandOrThrow(id);
+        brandRepository.delete(brandToDelete);
     }
 
 
     private Vehicle getVehicleOrThrow(Long id) {
         return vehicleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Veiculo com id: " + id + " não encontrado"));
+    }
+    private VehicleModel getVehicleModelOrThrow(Long id){
+        return modelRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Modelo com id: "+id+" não encontrado"));
+    }
+    private Brand getBrandOrThrow(Long id){
+        return brandRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Marca com id: "+id+" não encontrada"));
     }
 }
