@@ -8,11 +8,13 @@ import tech.drufontael.carshop.modules.shared.value_object.Email;
 public class EmailConverter implements AttributeConverter<Email,String> {
     @Override
     public String convertToDatabaseColumn(Email email) {
+        if(email==null) return "";
         return email.getValue();
     }
 
     @Override
     public Email convertToEntityAttribute(String email) {
+        if(email.isBlank()) return null;
         return new Email(email);
     }
 }

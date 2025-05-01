@@ -2,6 +2,7 @@ package tech.drufontael.carshop.modules.customer.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tech.drufontael.carshop.exceptions.ResourceNotFoundException;
 import tech.drufontael.carshop.modules.customer.domain.Customer;
 import tech.drufontael.carshop.modules.customer.domain.enums.CustomerType;
@@ -25,9 +26,10 @@ public class CustomerService implements CustomerManager {
     private final CustomerRepository repository;
 
     @Override
+    @Transactional
     public Customer create(String name, String register, String type) {
         List<CustomerType> types=new ArrayList<>();
-        types.add(CustomerType.valueOf(type));
+        types.add(CustomerType.valueOf(type.toUpperCase()));
         return repository.save(Customer.builder()
                         .name(name)
                         .register(new Register(register))

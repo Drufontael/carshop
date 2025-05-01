@@ -8,11 +8,13 @@ import tech.drufontael.carshop.modules.shared.value_object.Register;
 public class RegisterConverter implements AttributeConverter<Register,String> {
     @Override
     public String convertToDatabaseColumn(Register register) {
+        if(register==null) return "";
         return register.getValue();
     }
 
     @Override
     public Register convertToEntityAttribute(String register) {
+        if(register.isBlank()) return null;
         return new Register(register);
     }
 }
