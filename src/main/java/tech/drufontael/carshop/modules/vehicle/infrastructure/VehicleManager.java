@@ -15,6 +15,7 @@ public interface VehicleManager {
     void addVariablesDatas(Long id,Long ownerId,BigDecimal price,Integer mileage);
     void addAdditionalInformations(Long id, String[] informations);
     Vehicle getVehicleById(Long id);
+    List<Vehicle> getAllVehicles();
     Vehicle updateVehicle(Long id,Vehicle vehicle);
     void deleteVehicleById(Long id);
 
@@ -22,7 +23,7 @@ public interface VehicleManager {
 
     VehicleModel createVehicleModel(String model, Integer modelYear, Long brandId);
     VehicleModel getVehicleModelById(Long id);
-    List<VehicleModel> getAllVehicleModels();
+    List<VehicleModel> getVehicleModelsByBrandId(Long brandId);
     VehicleModel updateVehicleModel(Long id,VehicleModel model);
     void deleteVehicleModel(Long id);
 

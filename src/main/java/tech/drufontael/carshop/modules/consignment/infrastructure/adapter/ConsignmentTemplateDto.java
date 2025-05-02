@@ -63,7 +63,7 @@ public class ConsignmentTemplateDto {
                 .consignorIdentity("--")
                 .consignorPhone(consignment.getConsignor().getContact().getCellPhone().getValue())
                 .vehicleBrand(consignment.getVehicle().getVehicleData().getVehicleModel().getBrand().getName())
-                .vehicleModel(consignment.getVehicle().getVehicleData().getVehicleModel().getModelo())
+                .vehicleModel(consignment.getVehicle().getVehicleData().getVehicleModel().getModel())
                 .vehiclePlate(consignment.getVehicle().getVehicleData().getPlate().getValue())
                 .vehicleYears(year)
                 .vehicleMileage(consignment.getVehicle().getMileage()+"")

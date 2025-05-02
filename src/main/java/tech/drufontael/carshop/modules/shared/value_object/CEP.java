@@ -1,5 +1,7 @@
 package tech.drufontael.carshop.modules.shared.value_object;
 
+import tech.drufontael.carshop.exceptions.InvalidArgumentFormatException;
+
 public class CEP {
     private String cep;
 
@@ -9,22 +11,22 @@ public class CEP {
     }
     private void validarCEP(String cep) {
         if (cep == null) {
-            throw new IllegalArgumentException("CEP inválido: não pode ser null");
+            throw new InvalidArgumentFormatException("CEP inválido: não pode ser null");
         }
         String cepNumerico = cep.replaceAll("[^0-9]", "");
         if (cepNumerico.length() != 8) {
-            throw new IllegalArgumentException("CEP inválido: " + cep + " (deve conter 8 dígitos)");
+            throw new InvalidArgumentFormatException("CEP inválido: " + cep + " (deve conter 8 dígitos)");
         }
         if (!cepNumerico.matches("\\d{8}")) {
-            throw new IllegalArgumentException("CEP inválido: " + cep + " (deve conter apenas números)");
+            throw new InvalidArgumentFormatException("CEP inválido: " + cep + " (deve conter apenas números)");
         }
         try {
             int numeroCEP = Integer.parseInt(cepNumerico);
             if (numeroCEP < 1000000 || numeroCEP > 99999999) {
-                throw new IllegalArgumentException("CEP inválido: " + cep + " (fora do intervalo válido)");
+                throw new InvalidArgumentFormatException("CEP inválido: " + cep + " (fora do intervalo válido)");
             }
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("CEP inválido: " + cep + " (não é um número válido)");
+            throw new InvalidArgumentFormatException("CEP inválido: " + cep + " (não é um número válido)");
         }
     }
     private String cepFormater(String cep){

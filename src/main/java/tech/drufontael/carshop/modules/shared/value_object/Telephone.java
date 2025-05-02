@@ -1,5 +1,7 @@
 package tech.drufontael.carshop.modules.shared.value_object;
 
+import tech.drufontael.carshop.exceptions.InvalidArgumentFormatException;
+
 import java.util.regex.Pattern;
 
 public class Telephone {
@@ -12,24 +14,24 @@ public class Telephone {
         this.telephone=telephoneFormatter(telephone);
     }
 
-    private static void telephoneValidate(String telephone) throws IllegalArgumentException {
+    private static void telephoneValidate(String telephone){
         if (telephone == null) {
-            throw new IllegalArgumentException("Telephone inválido: não pode ser null");
+            throw new InvalidArgumentFormatException("Telephone inválido: não pode ser null");
         }
         String numeroLimpo = telephone.replaceAll("[\\s()-]", "");
         if (numeroLimpo.length() < 10 || numeroLimpo.length() > 13) {
-            throw new IllegalArgumentException(
+            throw new InvalidArgumentFormatException(
                     String.format("Telephone inválido: %s (tamanho incorreto)", telephone)
             );
         }
         if (!numeroLimpo.matches("^(\\+?55)?\\d{10,11}$")) {
-            throw new IllegalArgumentException(
+            throw new InvalidArgumentFormatException(
                     String.format("Telephone inválido: %s (formato incorreto)", telephone)
             );
         }
         String numeroSemDDD = numeroLimpo.replaceAll("^\\+?55?", "");
         if (numeroSemDDD.length() == 11 && !numeroSemDDD.startsWith("9", 2)) {
-            throw new IllegalArgumentException(
+            throw new InvalidArgumentFormatException(
                     String.format("Telephone inválido: %s (celular deve começar com 9)", telephone)
             );
         }

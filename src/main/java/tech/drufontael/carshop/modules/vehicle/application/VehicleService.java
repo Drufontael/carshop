@@ -79,6 +79,11 @@ public class VehicleService implements VehicleManager {
     }
 
     @Override
+    public List<Vehicle> getAllVehicles() {
+        return vehicleRepository.findAll();
+    }
+
+    @Override
     @Transactional
     public Vehicle updateVehicle(Long id, Vehicle vehicle) {
         Vehicle v = getVehicleOrThrow(id);
@@ -102,7 +107,7 @@ public class VehicleService implements VehicleManager {
 
         VehicleModel newModel = VehicleModel.builder()
                 .brand(brand)
-                .modelo(model)
+                .model(model)
                 .modelYear(new ModelYear(modelYear))
                 .build();
 
@@ -115,14 +120,16 @@ public class VehicleService implements VehicleManager {
     }
 
     @Override
-    public List<VehicleModel> getAllVehicleModels() {
-        return modelRepository.findAll();
+    public List<VehicleModel> getVehicleModelsByBrandId(Long brandId) {
+        Brand brand=null;
+        if(brandId!=null) brand=getBrandById(brandId);
+        return modelRepository.findByBrand(brand);
     }
 
     @Override
     public VehicleModel updateVehicleModel(Long id, VehicleModel model) {
         VehicleModel modelToUpdate=getVehicleModelById(id);
-        modelToUpdate.setModelo(model.getModelo());
+        modelToUpdate.setModel(model.getModel());
         modelToUpdate.setModelYear(model.getModelYear());
         modelToUpdate.setBrand(model.getBrand());
         return modelRepository.save(modelToUpdate);
