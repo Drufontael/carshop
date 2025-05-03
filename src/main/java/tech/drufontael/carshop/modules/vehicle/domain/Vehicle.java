@@ -25,7 +25,7 @@ public class Vehicle {
     protected Integer mileage;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id", nullable = false)
+    @JoinColumn(name = "owner_id")
     protected Customer owner;
 
     @ElementCollection(fetch = FetchType.EAGER)

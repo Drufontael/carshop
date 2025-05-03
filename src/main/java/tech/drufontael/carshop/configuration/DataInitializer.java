@@ -47,6 +47,6 @@ public class DataInitializer implements CommandLineRunner {
                 .address(address)
                 .types(types)
                 .build();
-        repository.save(customer);
+        //repository.save(customer);
     }
 }

@@ -35,7 +35,7 @@ public class VehicleResponse {
                 .chassi(vehicle.getVehicleData().getChassi().getValue())
                 .renavan(vehicle.getVehicleData().getRenavam().getValue())
                 .manufactureYear(vehicle.getVehicleData().getManufactureYear().getValue())
-                .color(vehicle.getVehicleData().getColor().getCor())
+                .color(vehicle.getVehicleData().getColor()!=null?vehicle.getVehicleData().getColor().getCor():"não informado")
                 .price(vehicle.getPrice())
                 .mileage(vehicle.getMileage())
                 .url(ControllerUtils.buildUriFromCurrentRequest(vehicle.getId()).toString())
