@@ -9,14 +9,11 @@ import tech.drufontael.carshop.modules.customer.domain.enums.CustomerType;
 import tech.drufontael.carshop.modules.customer.infrastructure.CustomerManager;
 import tech.drufontael.carshop.modules.customer.infrastructure.CustomerRepository;
 import tech.drufontael.carshop.modules.shared.Address;
-import tech.drufontael.carshop.modules.shared.CarshopConstants;
 import tech.drufontael.carshop.modules.shared.Contact;
 import tech.drufontael.carshop.modules.shared.value_object.CEP;
 import tech.drufontael.carshop.modules.shared.value_object.Email;
 import tech.drufontael.carshop.modules.shared.value_object.Register;
 import tech.drufontael.carshop.modules.shared.value_object.Telephone;
-import tech.drufontael.carshop.modules.vehicle.domain.Vehicle;
-import tech.drufontael.carshop.modules.vehicle.infrastructure.VehicleManager;
 
 import java.util.ArrayList;
 import java.util.List;

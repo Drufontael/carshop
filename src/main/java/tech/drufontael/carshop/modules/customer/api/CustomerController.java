@@ -3,11 +3,8 @@ package tech.drufontael.carshop.modules.customer.api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tech.drufontael.carshop.modules.consignment.domain.Consignment;
 import tech.drufontael.carshop.modules.consignment.infrastructure.ConsignmentManager;
-import tech.drufontael.carshop.modules.consignment.api.requests.ConsignmentRequest;
 import tech.drufontael.carshop.modules.customer.api.dto.requests.CustomerRequest;
-import tech.drufontael.carshop.modules.consignment.api.responses.ConsignmentResponse;
 import tech.drufontael.carshop.modules.customer.api.dto.responses.CustomerResponse;
 import tech.drufontael.carshop.modules.customer.domain.Customer;
 import tech.drufontael.carshop.modules.customer.infrastructure.CustomerManager;
@@ -23,7 +20,6 @@ import java.net.URI;
 public class CustomerController {
 
     private final CustomerManager manager;
-    private final ConsignmentManager consignmentManager;
 
     @PostMapping
     public ResponseEntity<CustomerResponse> createCustomer(@RequestBody CustomerRequest request){

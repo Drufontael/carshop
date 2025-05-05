@@ -10,7 +10,7 @@ import tech.drufontael.carshop.modules.vehicle.domain.Vehicle;
 import java.util.List;
 
 public interface ConsignmentRepository extends JpaRepository<Consignment,Long>, JpaSpecificationExecutor<Consignment> {
-    default public List<Consignment> findByConsignorAndVehicle(Customer consignor, Vehicle vehicle){
+    default List<Consignment> findByConsignorAndVehicle(Customer consignor, Vehicle vehicle){
         Specification<Consignment> conjuction=(root,query,cb)-> cb.conjunction();
         Specification<Consignment> spec = Specification.where(conjuction);
         if(consignor!=null){

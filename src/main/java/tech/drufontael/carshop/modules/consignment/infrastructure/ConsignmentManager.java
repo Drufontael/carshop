@@ -1,9 +1,7 @@
 package tech.drufontael.carshop.modules.consignment.infrastructure;
 
 import tech.drufontael.carshop.modules.consignment.domain.Consignment;
-import tech.drufontael.carshop.modules.customer.domain.Customer;
 import tech.drufontael.carshop.modules.shared.Address;
-import tech.drufontael.carshop.modules.vehicle.domain.Vehicle;
 
 import java.math.BigDecimal;
 import java.util.List;
