@@ -24,7 +24,12 @@ public class ConsignmentController {
 
     @PostMapping
     public ResponseEntity<ConsignmentResponse> createConsignment(@RequestBody ConsignmentRequest request){
-        Consignment consignment=manager.createConsignment(request.consignorId(), request.vehicleId(), request.address());
+        Consignment consignment=manager.createConsignment(
+                request.consignorId(),
+                request.vehicleId(),
+                request.commission(),
+                request.minimumPrice(),
+                request.address());
         URI location= ControllerUtils.buildUriFromCurrentRequest(consignment.getId());
         return ResponseEntity.created(location).body(ConsignmentResponse.fromDomain(consignment));
     }

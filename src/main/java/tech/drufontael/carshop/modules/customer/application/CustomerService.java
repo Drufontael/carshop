@@ -27,7 +27,6 @@ import java.util.Optional;
 public class CustomerService implements CustomerManager {
 
     private final CustomerRepository repository;
-    private final VehicleManager vehicleManager;
 
     @Override
     @Transactional
@@ -99,12 +98,7 @@ public class CustomerService implements CustomerManager {
         repository.save(customer);
     }
 
-    @Override
-    public <T> T doTypeAction(Long customerId,Long vehicleId,String type,String... args) {
-        Customer customer = getById(customerId);
-        Vehicle vehicle = vehicleManager.getVehicleById(vehicleId);
-        return customer.doTypeAction(vehicle,type,args);
-    }
+
 
     private Address buildAddress(String cep, String street, String complement,
                                  String neighborhood, String city, String state, String country) {

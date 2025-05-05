@@ -42,12 +42,5 @@ public class CustomerController {
                 request.city(), request.state(), request.country());
         return ResponseEntity.ok().build();
     }
-    @PostMapping("/{id}/consignment")
-    public ResponseEntity<ConsignmentResponse> createConsignment(@PathVariable Long id, @RequestBody ConsignmentRequest request){
-        Consignment consignment=manager.doTypeAction(id,request.vehicleId(),
-                "CONSIGNOR", request.commission(),request.minimumPrice());
-        consignmentManager.saveConsignment(consignment);
-        return ResponseEntity.ok(ConsignmentResponse.fromDomain(consignment));
-    }
 
 }

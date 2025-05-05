@@ -11,8 +11,7 @@ import tech.drufontael.carshop.modules.vehicle.domain.Vehicle;
 
 import java.math.BigDecimal;
 
-@RequiredArgsConstructor
-@NoArgsConstructor
+
 public class Consign implements CustomerAction {
 
 

@@ -19,5 +19,4 @@ public interface CustomerManager {
             String conuntry
     );
     void addType(Long customerId, String type);
-    <T> T doTypeAction(Long customerId,Long vehicleId,String type,String... args);
 }

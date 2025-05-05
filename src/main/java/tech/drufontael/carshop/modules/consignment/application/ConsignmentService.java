@@ -31,28 +31,19 @@ public class ConsignmentService implements ConsignmentManager {
 
     @Override
     @Transactional
-    public Consignment createConsignment(Long consignorId, Long vehicleId, Address address) {
+    public Consignment createConsignment(Long consignorId, Long vehicleId,String commission,String minimumPrice, Address address) {
         Customer consignor=customerManager.getById(consignorId);
         Vehicle vehicle=vehicleManager.getVehicleById(vehicleId);
+        Consignment consignment=consignor.doTypeAction(vehicle,"CONSIGNOR",commission,minimumPrice);
         LocalDateTime entry=LocalDateTime.now();
         if(address==null){
             address= CarshopConstants.SHOP_ADDRESS;
         }
-        return repository.save(new Consignment(
-                null,
-                consignor,
-                vehicle,
-                address,
-                vehicle.getPrice(),
-                CarshopConstants.COMMISSION,
-                entry
-        ));
-    }
-
-    @Override
-    public Consignment saveConsignment(Consignment consignment) {
+        consignment.setAddress(address);
+        consignment.setDateTime(entry);
         return repository.save(consignment);
     }
+
 
     @Override
     public Consignment getConsignmentById(Long id) {

@@ -9,8 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface ConsignmentManager {
-    Consignment createConsignment(Long consignorId, Long vehicleId, Address address);
-    Consignment saveConsignment(Consignment consignment);
+    Consignment createConsignment(Long consignorId, Long vehicleId,String commission,String minimumPrice, Address address);
     Consignment getConsignmentById(Long id);
     List<Consignment> getConsignmentByConsignorAndVehicle(Long consignorId, Long vehicleId);
     Consignment updateConsignment(Long id, BigDecimal minimumPrice,double commission,Address address);
