@@ -1,4 +1,4 @@
-package tech.drufontael.carshop.modules.customer.api.dto.responses;
+package tech.drufontael.carshop.modules.consignment.api.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

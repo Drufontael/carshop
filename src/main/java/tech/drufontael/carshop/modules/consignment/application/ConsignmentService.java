@@ -15,6 +15,7 @@ import tech.drufontael.carshop.modules.shared.CarshopConstants;
 import tech.drufontael.carshop.modules.vehicle.domain.Vehicle;
 import tech.drufontael.carshop.modules.vehicle.infrastructure.VehicleManager;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -59,23 +60,25 @@ public class ConsignmentService implements ConsignmentManager {
     }
 
     @Override
-    public List<Consignment> getAllConsignment() {
-        return repository.findAll();
+    public List<Consignment> getConsignmentByConsignorAndVehicle(Long consignorId, Long vehicleId) {
+        Customer consignor=customerManager.getById(consignorId);
+        Vehicle vehicle=vehicleManager.getVehicleById(vehicleId);
+        return repository.findByConsignorAndVehicle(consignor,vehicle);
     }
 
+
     @Override
-    public Consignment updateConsignment(Long id, Consignment consignment) {
+    public Consignment updateConsignment(Long id,  BigDecimal minimumPrice, double commission, Address address) {
         Consignment toUpdate=getConsigmentByIdOrThrow(id);
-        toUpdate.setConsignor(consignment.getConsignor());
-        toUpdate.setVehicle(consignment.getVehicle());
-        toUpdate.setAddress(consignment.getAddress());
-        if(!Objects.equals(toUpdate.getMinimumPrice(), consignment.getMinimumPrice())){
-            Vehicle vehicle=vehicleManager.getVehicleById(consignment.getVehicle().getId());
-            vehicle.setPrice(consignment.getMinimumPrice());
+        toUpdate.setAddress(address);
+        if(!Objects.equals(toUpdate.getMinimumPrice(), minimumPrice)){
+            Vehicle vehicle=vehicleManager.getVehicleById(toUpdate.getVehicle().getId());
+            vehicle.setPrice(minimumPrice);
             vehicleManager.updateVehicle(vehicle.getId(), vehicle);
-            toUpdate.setMinimumPrice(consignment.getMinimumPrice());
+            toUpdate.setMinimumPrice(minimumPrice);
         }
-        toUpdate.setCommission(consignment.getCommission());
+        toUpdate.setCommission(commission);
+        toUpdate.setAddress(address);
         return repository.save(toUpdate);
     }
 
