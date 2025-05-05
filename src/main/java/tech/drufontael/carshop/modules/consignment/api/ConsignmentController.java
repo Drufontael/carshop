@@ -1,6 +1,9 @@
 package tech.drufontael.carshop.modules.consignment.api;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.drufontael.carshop.exceptions.InvalidArgumentFormatException;
@@ -58,6 +61,19 @@ public class ConsignmentController {
             e.printStackTrace();
             throw new InvalidArgumentFormatException("Valores invalidos para comissão ou preço!");
         }
+    }
+
+    @GetMapping("/{id}/contract")
+    public ResponseEntity<ByteArrayResource> getContract(@PathVariable Long id){
+        ByteArrayResource resource=new ByteArrayResource(manager.generateAgreement(id));
+        HttpHeaders headers=new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=arquivo.pdf");
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .contentLength(resource.contentLength())
+                .body(resource);
     }
 
 
