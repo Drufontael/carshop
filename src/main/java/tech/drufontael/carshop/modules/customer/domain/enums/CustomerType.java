@@ -13,13 +13,13 @@ public enum CustomerType {
     BUYER(new Buy()),
     OWNER(new Sell());
 
-    private  CustomerAction action;
+    private final CustomerAction action;
 
     CustomerType(CustomerAction action){
-        this.action=action;
+        this.action =action;
     }
 
-    void action(Customer customer, Vehicle vehicle, String... args){
-        action.doAction(customer,vehicle,args);
+    public <T> T doAction(Customer customer, Vehicle vehicle, String... args){
+       return action.doAction(customer,vehicle,args);
     }
 }

@@ -2,6 +2,7 @@ package tech.drufontael.carshop.modules.consignment.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tech.drufontael.carshop.exceptions.ResourceNotFoundException;
 import tech.drufontael.carshop.modules.consignment.domain.Consignment;
 import tech.drufontael.carshop.modules.consignment.infrastructure.ConsignmentManager;
@@ -10,12 +11,13 @@ import tech.drufontael.carshop.modules.consignment.infrastructure.adapter.PdfCon
 import tech.drufontael.carshop.modules.customer.domain.Customer;
 import tech.drufontael.carshop.modules.customer.infrastructure.CustomerManager;
 import tech.drufontael.carshop.modules.shared.Address;
-import tech.drufontael.carshop.modules.shared.value_object.CEP;
+import tech.drufontael.carshop.modules.shared.CarshopConstants;
 import tech.drufontael.carshop.modules.vehicle.domain.Vehicle;
 import tech.drufontael.carshop.modules.vehicle.infrastructure.VehicleManager;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -27,28 +29,28 @@ public class ConsignmentService implements ConsignmentManager {
     private final PdfContractAdapter contractAdapter;
 
     @Override
+    @Transactional
     public Consignment createConsignment(Long consignorId, Long vehicleId, Address address) {
         Customer consignor=customerManager.getById(consignorId);
         Vehicle vehicle=vehicleManager.getVehicleById(vehicleId);
         LocalDateTime entry=LocalDateTime.now();
         if(address==null){
-            address= Address.builder()
-                    .cep(new CEP("74215-240"))
-                    .street("Avenida Multirão")
-                    .complement("nº 2496, Qd. 78, Lt. 23E, Loja 01")
-                    .neighborhood("St. Bueno")
-                    .city("Goiânia")
-                    .state("GO")
-                    .country("Brasil")
-                    .build();
+            address= CarshopConstants.SHOP_ADDRESS;
         }
         return repository.save(new Consignment(
                 null,
                 consignor,
                 vehicle,
                 address,
+                vehicle.getPrice(),
+                CarshopConstants.COMMISSION,
                 entry
         ));
+    }
+
+    @Override
+    public Consignment saveConsignment(Consignment consignment) {
+        return repository.save(consignment);
     }
 
     @Override
@@ -67,6 +69,13 @@ public class ConsignmentService implements ConsignmentManager {
         toUpdate.setConsignor(consignment.getConsignor());
         toUpdate.setVehicle(consignment.getVehicle());
         toUpdate.setAddress(consignment.getAddress());
+        if(!Objects.equals(toUpdate.getMinimumPrice(), consignment.getMinimumPrice())){
+            Vehicle vehicle=vehicleManager.getVehicleById(consignment.getVehicle().getId());
+            vehicle.setPrice(consignment.getMinimumPrice());
+            vehicleManager.updateVehicle(vehicle.getId(), vehicle);
+            toUpdate.setMinimumPrice(consignment.getMinimumPrice());
+        }
+        toUpdate.setCommission(consignment.getCommission());
         return repository.save(toUpdate);
     }
 

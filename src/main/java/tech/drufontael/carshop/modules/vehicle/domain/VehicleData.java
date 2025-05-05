@@ -3,7 +3,7 @@ package tech.drufontael.carshop.modules.vehicle.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import tech.drufontael.carshop.exceptions.InvalidArgumentFormatException;
-import tech.drufontael.carshop.modules.vehicle.domain.enuns.Color;
+import tech.drufontael.carshop.modules.vehicle.domain.enums.Color;
 import tech.drufontael.carshop.modules.vehicle.domain.value_object.ManufactureYear;
 import tech.drufontael.carshop.modules.vehicle.domain.value_object.Chassi;
 import tech.drufontael.carshop.modules.vehicle.domain.value_object.Plate;

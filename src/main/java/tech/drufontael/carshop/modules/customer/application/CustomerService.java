@@ -9,11 +9,14 @@ import tech.drufontael.carshop.modules.customer.domain.enums.CustomerType;
 import tech.drufontael.carshop.modules.customer.infrastructure.CustomerManager;
 import tech.drufontael.carshop.modules.customer.infrastructure.CustomerRepository;
 import tech.drufontael.carshop.modules.shared.Address;
+import tech.drufontael.carshop.modules.shared.CarshopConstants;
 import tech.drufontael.carshop.modules.shared.Contact;
 import tech.drufontael.carshop.modules.shared.value_object.CEP;
 import tech.drufontael.carshop.modules.shared.value_object.Email;
 import tech.drufontael.carshop.modules.shared.value_object.Register;
 import tech.drufontael.carshop.modules.shared.value_object.Telephone;
+import tech.drufontael.carshop.modules.vehicle.domain.Vehicle;
+import tech.drufontael.carshop.modules.vehicle.infrastructure.VehicleManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,7 @@ import java.util.Optional;
 public class CustomerService implements CustomerManager {
 
     private final CustomerRepository repository;
+    private final VehicleManager vehicleManager;
 
     @Override
     @Transactional
@@ -93,6 +97,13 @@ public class CustomerService implements CustomerManager {
         CustomerType newType=CustomerType.valueOf(type);
         if(!customer.getTypes().contains(newType)) customer.getTypes().add(newType);
         repository.save(customer);
+    }
+
+    @Override
+    public <T> T doTypeAction(Long customerId,Long vehicleId,String type,String... args) {
+        Customer customer = getById(customerId);
+        Vehicle vehicle = vehicleManager.getVehicleById(vehicleId);
+        return customer.doTypeAction(vehicle,type,args);
     }
 
     private Address buildAddress(String cep, String street, String complement,

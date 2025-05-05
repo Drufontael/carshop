@@ -8,11 +8,11 @@ public class Buy implements CustomerAction {
 
 
     @Override
-    public void doAction(Customer customer, Vehicle vehicle,String... args) {
+    public PurchaseOrder doAction(Customer customer, Vehicle vehicle,String... args) {
         //PaymentMethod paymentMethod=new PaymentMethod(args[0]);
         //SellContract contract=generateContract(customer,vehicle,paymentMethod);
         //BuyAnSellOrder order=generateOrder(contract);
-
+        return new PurchaseOrder();
     }
 }
 

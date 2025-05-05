@@ -1,4 +1,4 @@
-package tech.drufontael.carshop.modules.vehicle.domain.enuns;
+package tech.drufontael.carshop.modules.vehicle.domain.enums;
 
 import tech.drufontael.carshop.exceptions.ResourceNotFoundException;
 

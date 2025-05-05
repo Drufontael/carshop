@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tech.drufontael.carshop.exceptions.ResourceNotFoundException;
 import tech.drufontael.carshop.modules.customer.domain.enums.CustomerType;
 import tech.drufontael.carshop.modules.shared.Address;
 import tech.drufontael.carshop.modules.shared.Contact;
 import tech.drufontael.carshop.modules.shared.value_object.Register;
+import tech.drufontael.carshop.modules.vehicle.domain.Vehicle;
 
 import java.util.List;
 
@@ -33,4 +35,12 @@ public class Customer {
     protected Contact contact;
     @Embedded
     protected Address address;
+
+    public <T> T doTypeAction(Vehicle vehicle,String type,String... args) {
+        Customer customer = this;
+        CustomerType customerType = CustomerType.valueOf(type.toUpperCase());
+        if (!customer.getTypes().contains(customerType))
+            throw new ResourceNotFoundException("Cliente com id: " + this.id + " não é do tipo " + type);
+        return customerType.doAction(customer,vehicle, args);
+    }
 }

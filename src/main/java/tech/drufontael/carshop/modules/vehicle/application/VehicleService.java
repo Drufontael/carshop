@@ -10,7 +10,7 @@ import tech.drufontael.carshop.modules.vehicle.domain.Brand;
 import tech.drufontael.carshop.modules.vehicle.domain.Vehicle;
 import tech.drufontael.carshop.modules.vehicle.domain.VehicleData;
 import tech.drufontael.carshop.modules.vehicle.domain.VehicleModel;
-import tech.drufontael.carshop.modules.vehicle.domain.enuns.Color;
+import tech.drufontael.carshop.modules.vehicle.domain.enums.Color;
 import tech.drufontael.carshop.modules.vehicle.domain.value_object.*;
 import tech.drufontael.carshop.modules.vehicle.infrastructure.BrandRepository;
 import tech.drufontael.carshop.modules.vehicle.infrastructure.VehicleManager;

@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ConsignmentManager {
     Consignment createConsignment(Long consignorId, Long vehicleId, Address address);
+    Consignment saveConsignment(Consignment consignment);
     Consignment getConsignmentById(Long id);
     List<Consignment> getAllConsignment();
     Consignment updateConsignment(Long id,Consignment consignment);

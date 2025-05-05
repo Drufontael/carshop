@@ -6,8 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import tech.drufontael.carshop.modules.customer.domain.Customer;
 import tech.drufontael.carshop.modules.shared.Address;
+import tech.drufontael.carshop.modules.shared.CarshopConstants;
 import tech.drufontael.carshop.modules.vehicle.domain.Vehicle;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -29,7 +31,18 @@ public class Consignment {
 
     @Embedded
     private Address address;
-
+    @Column( precision = 15, scale = 2)
+    private BigDecimal minimumPrice;
+    private Double commission;
     private LocalDateTime dateTime;
+
+    public  Consignment(Customer customer,Vehicle vehicle,Double commission,BigDecimal minimumPrice){
+        this.consignor=customer;
+        this.vehicle=vehicle;
+        this.commission=commission;
+        this.minimumPrice=minimumPrice;
+        this.address= CarshopConstants.SHOP_ADDRESS;
+        this.dateTime=LocalDateTime.now();
+    }
 }
 

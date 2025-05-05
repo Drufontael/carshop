@@ -8,7 +8,7 @@ public class Sell implements CustomerAction {
 
 
     @Override
-    public void doAction(Customer customer, Vehicle vehicle, String... args) {
-
+    public SalesOrder doAction(Customer customer, Vehicle vehicle, String... args) {
+        return new SalesOrder();
     }
 }
