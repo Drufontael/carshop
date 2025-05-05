@@ -9,6 +9,7 @@ import tech.drufontael.carshop.modules.customer.domain.enums.CustomerType;
 import tech.drufontael.carshop.modules.customer.infrastructure.CustomerManager;
 import tech.drufontael.carshop.modules.customer.infrastructure.CustomerRepository;
 import tech.drufontael.carshop.modules.shared.Address;
+import tech.drufontael.carshop.modules.shared.CarshopConstants;
 import tech.drufontael.carshop.modules.shared.Contact;
 import tech.drufontael.carshop.modules.shared.value_object.CEP;
 import tech.drufontael.carshop.modules.shared.value_object.Email;
@@ -35,6 +36,12 @@ public class CustomerService implements CustomerManager {
                         .register(new Register(register))
                         .types(types)
                 .build());
+    }
+
+    @Override
+    public List<Customer> getByType(String type) {
+        CustomerType searchType=type!=null?CarshopConstants.VARIANT_TO_TYPE.get(type.toLowerCase()):null;
+        return repository.findCustomerByType(searchType);
     }
 
     @Override
@@ -90,7 +97,7 @@ public class CustomerService implements CustomerManager {
     @Override
     public void addType(Long customerId, String type) {
         Customer customer=getById(customerId);
-        CustomerType newType=CustomerType.valueOf(type);
+        CustomerType newType=CarshopConstants.VARIANT_TO_TYPE.get(type.toLowerCase());
         if(!customer.getTypes().contains(newType)) customer.getTypes().add(newType);
         repository.save(customer);
     }

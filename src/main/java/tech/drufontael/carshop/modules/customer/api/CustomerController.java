@@ -13,6 +13,7 @@ import tech.drufontael.carshop.modules.shared.dto.requests.ContactRequest;
 import tech.drufontael.carshop.modules.shared.utils.ControllerUtils;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v2/customers")
@@ -37,6 +38,12 @@ public class CustomerController {
         manager.addAddress(id, request.cep(), request.city(), request.complement(), request.complement(),
                 request.city(), request.state(), request.country());
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CustomerResponse>> getAllByType(@RequestParam(value = "tipo",required = false) String type){
+        List<Customer> customers=manager.getByType(type);
+        return ResponseEntity.ok(customers.stream().map(CustomerResponse::fromDomain).toList());
     }
 
 }
